@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mvvm:PageBase xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:mvvm="clr-namespace:Com.Xamtastic.Patterns.SmallestMvvm;assembly=Com.Xamtastic.Patterns.SmallestMvvm"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ClientAppToBuild.MainPage">
+  <Label Text="{Binding Message}" VerticalOptions="Center" HorizontalOptions="Center" />
+</mvvm:PageBase>
