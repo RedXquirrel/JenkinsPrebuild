@@ -18,27 +18,41 @@ namespace CI
 
         public override bool Execute()
         {
+            CheckLogPathExists();
+            LogBeforeBuildStarted();
 
-            string path = string.Format(LogPath);
-            if (!File.Exists(path))
+
+
+            
+            LogAfterBuildFinished();
+            return true;
+        }
+
+        private void LogAfterBuildFinished()
+        {
+            using (StreamWriter sw = File.AppendText(LogPath))
             {
-                using (StreamWriter sw = File.CreateText(path))
+                sw.WriteLine(string.Format("After Build Finished for Project {0} at {1} UTC", ProjectName, DateTime.UtcNow.ToString()));
+            }
+        }
+
+        private void LogBeforeBuildStarted()
+        {
+            using (StreamWriter sw = File.AppendText(LogPath))
+            {
+                sw.WriteLine(string.Format("After Build Started for Project {0} at {1} UTC", ProjectName, DateTime.UtcNow.ToString()));
+            }
+        }
+
+        private void CheckLogPathExists()
+        {
+            if (!File.Exists(LogPath))
+            {
+                using (StreamWriter sw = File.CreateText(LogPath))
                 {
                     sw.WriteLine(string.Format("Build Server Log File Created: {0} UTC", DateTime.UtcNow.ToString()));
                 }
             }
-
-            using (StreamWriter sw = File.AppendText(path))
-            {
-                sw.WriteLine(string.Format("After Build Started for Project {0} at {1} UTC", ProjectName, DateTime.UtcNow.ToString()));
-            }
-
-            using (StreamWriter sw = File.AppendText(path))
-            {
-                sw.WriteLine(string.Format("After Build Finished for Project {0} at {1} UTC", ProjectName, DateTime.UtcNow.ToString()));
-            }
-
-            return true;
         }
     }
 }
