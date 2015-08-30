@@ -36,6 +36,13 @@ namespace CI
 
             string sourceFile = System.IO.Path.Combine(IPASourceDirectory, IPASourceFileName);
 
+            using (StreamWriter sw = File.AppendText(LogPath))
+            {
+                sw.WriteLine(string.Format("     IPA Source Filename {0}", IPASourceFileName));
+                sw.WriteLine(string.Format("     IPA Source Directory {0}", IPASourceDirectory));
+                sw.WriteLine(string.Format("     IPA Source Path {0}", sourceFile));
+            }
+
             string destFile = string.Empty;
             if(IPATargetFileName.Contains("{0}"))
             {
