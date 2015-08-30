@@ -185,7 +185,7 @@
     <Message Text="Finishing iOS Before Build Task" Importance="normal" />
   </Target>
   <UsingTask AssemblyFile="$(MSBuildProjectDirectory)\..\..\CI\bin\Debug\CI.dll" TaskName="CI.IOSAfterBuildTask" />
-  <Target Name="AfterCompile" >
+  <Target Name="AfterCreateIpa" >
     <Message Text="Starting iOS After Build Task" Importance="normal" />
     <IOSAfterBuildTask 
       LogPath="$(MSBuildProjectDirectory)\..\..\..\ClientAppToBuild.iOS.AfterBuild.Log.txt" 
