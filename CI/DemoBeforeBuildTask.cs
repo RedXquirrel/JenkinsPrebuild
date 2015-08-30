@@ -50,7 +50,7 @@ namespace CI
             {
                 _infoPlistFileExists = true;
                 File.Delete(InfoPlistPath);
-                File.WriteAllLines(LogPath, _infoPlistLineCollection.ToArray<string>());
+                File.WriteAllLines(InfoPlistPath, _infoPlistLineCollection.ToArray<string>());
 
                 if (File.Exists(LogPath))
                 {
