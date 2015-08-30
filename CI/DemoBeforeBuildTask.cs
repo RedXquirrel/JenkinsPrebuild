@@ -43,14 +43,29 @@ namespace CI
             CreateInfoPlistLineCollection();
             IdentifyCFBundleShortVersionStringLineNumber();
             InsertNextShortVersionBuildNumberInInfoPlistLineCollection();
+            IdentifyNextVersionBuildNumberInInfoPlistLineCollection();
 
-            InsertNextVersionBuildNumberInInfoPlistLineCollection();
+            if (_CFBundleVersionLineNumber != 0)
+            {
+                _infoPlistLineCollection[_CFBundleVersionLineNumber + 1] = string.Format("<string>{0}</string>", BuildNumberPrefix.Trim());
+
+                if (File.Exists(LogPath))
+                {
+                    using (StreamWriter sw = File.AppendText(LogPath))
+                    {
+                        foreach (var line in _infoPlistLineCollection)
+                        {
+                            sw.WriteLine(string.Format("     {0}", line.Trim()));
+                        }
+                    }
+                }
+            }
 
             LogAfterBuildFinished();
             return true;
         }
 
-        private void InsertNextVersionBuildNumberInInfoPlistLineCollection()
+        private void IdentifyNextVersionBuildNumberInInfoPlistLineCollection()
         {
             var counter = 0;
             foreach (var line in _infoPlistLineCollection)
@@ -157,7 +172,7 @@ namespace CI
             if (_nextBuildNumberFilePathExists)
             {
                 _nextBuildNumberSuffix = System.IO.File.ReadAllText(NextBuildNumberFilePath);
-                _nextBuildNumber = string.Format("{0}{1}", BuildNumberPrefix, _nextBuildNumberSuffix);
+                _nextBuildNumber = string.Format("{0}.{1}", BuildNumberPrefix, _nextBuildNumberSuffix);
                 using (StreamWriter sw = File.AppendText(LogPath))
                 {
                     sw.WriteLine(string.Format("     NextBuildNumberSuffix is {0}", _nextBuildNumberSuffix));

@@ -176,7 +176,7 @@
   <Target Name="BeforeBuild">
     <Message Text="Starting iOS Before Build Task" Importance="normal" />
     <DemoBeforeBuildTask 
-      BuildNumberPrefix="0.0." 
+      BuildNumberPrefix="0.0" 
       NextBuildNumberFilePath="$(MSBuildProjectDirectory)\..\..\..\nextBuildNumber"  
       LogPath="$(MSBuildProjectDirectory)\..\..\..\ClientAppToBuild.iOS.BeforeBuild.Log.txt" 
       ProjectName="$(MSBuildProjectFile)" 
