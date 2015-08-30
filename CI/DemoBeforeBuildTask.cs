@@ -35,16 +35,16 @@ namespace CI
 
         public override bool Execute()
         {
-            CheckLogPathExists();
-            LogBeforeBuildStarted();
-            CheckNextBuildNumberFilePathExists();
-            DeriveNextBuildNumber();
-            CheckInfoPlistPathExists();
-            CreateInfoPlistLineCollection();
-            IdentifyCFBundleShortVersionStringLineNumber();
-            InsertNextShortVersionBuildNumberInInfoPlistLineCollection();
-            IdentifyNextVersionBuildNumberInInfoPlistLineCollection();
-            InsertNextVersionBuildNumberInInfoPlistLineCollection();
+            if (!CheckLogPathExists()) return false;
+            if (!LogBeforeBuildStarted()) return false;
+            if (!CheckNextBuildNumberFilePathExists()) return false;
+            if (!DeriveNextBuildNumber()) return false;
+            if (!CheckInfoPlistPathExists()) return false;
+            if (!CreateInfoPlistLineCollection()) return false;
+            if (!IdentifyCFBundleShortVersionStringLineNumber()) return false;
+            if (!InsertNextShortVersionBuildNumberInInfoPlistLineCollection()) return false;
+            if (!IdentifyNextVersionBuildNumberInInfoPlistLineCollection()) return false;
+            if (!InsertNextVersionBuildNumberInInfoPlistLineCollection()) return false;
 
             if (File.Exists(InfoPlistPath))
             {
@@ -65,11 +65,12 @@ namespace CI
                 return false;
             }
 
-            LogAfterBuildFinished();
+            if (!LogAfterBuildFinished()) return false;
+
             return true;
         }
 
-        private void InsertNextVersionBuildNumberInInfoPlistLineCollection()
+        private bool InsertNextVersionBuildNumberInInfoPlistLineCollection()
         {
             if (_CFBundleVersionLineNumber != 0)
             {
@@ -94,9 +95,11 @@ namespace CI
             {
                 return false;
             }
+
+            return true;
         }
 
-        private void IdentifyNextVersionBuildNumberInInfoPlistLineCollection()
+        private bool IdentifyNextVersionBuildNumberInInfoPlistLineCollection()
         {
             var counter = 0;
             foreach (var line in _infoPlistLineCollection)
@@ -118,9 +121,10 @@ namespace CI
                 }
                 counter++;
             }
+            return true;
         }
 
-        private void InsertNextShortVersionBuildNumberInInfoPlistLineCollection()
+        private bool InsertNextShortVersionBuildNumberInInfoPlistLineCollection()
         {
             if (_CFBundleShortVersionStringLineNumber != 0)
             {
@@ -145,9 +149,10 @@ namespace CI
             {
                 return false;
             }
+            return true;
         }
 
-        private void IdentifyCFBundleShortVersionStringLineNumber()
+        private bool IdentifyCFBundleShortVersionStringLineNumber()
         {
             var counter = 0;
             foreach (var line in _infoPlistLineCollection)
@@ -169,9 +174,10 @@ namespace CI
                 }
                 counter++;
             }
+            return true;
         }
 
-        private void CreateInfoPlistLineCollection()
+        private bool CreateInfoPlistLineCollection()
         {
             if (_infoPlistFileExists)
             {
@@ -196,9 +202,10 @@ namespace CI
             {
                 return false;
             }
+            return true;
         }
 
-        private void CheckInfoPlistPathExists()
+        private bool CheckInfoPlistPathExists()
         {
             if (File.Exists(LogPath))
             {
@@ -225,10 +232,10 @@ namespace CI
             {
                 return false;
             }
-
+            return true;
         }
 
-        private void DeriveNextBuildNumber()
+        private bool DeriveNextBuildNumber()
         {
             if (_nextBuildNumberFilePathExists)
             {
@@ -247,10 +254,10 @@ namespace CI
             {
                 return false;
             }
-
+            return true;
         }
 
-        private void CheckNextBuildNumberFilePathExists()
+        private bool CheckNextBuildNumberFilePathExists()
         {
             if (File.Exists(NextBuildNumberFilePath))
             {
@@ -264,25 +271,28 @@ namespace CI
             {
                 return false;
             }
+            return true;
         }
 
-        private void LogAfterBuildFinished()
+        private bool LogAfterBuildFinished()
         {
             using (StreamWriter sw = File.AppendText(LogPath))
             {
                 sw.WriteLine(string.Format("Before Build Finished for Project {0} at {1} UTC", ProjectName, DateTime.UtcNow.ToString()));
             }
+            return true;
         }
 
-        private void LogBeforeBuildStarted()
+        private bool LogBeforeBuildStarted()
         {
             using (StreamWriter sw = File.AppendText(LogPath))
             {
                 sw.WriteLine(string.Format("Before Build Started for Project {0} at {1} UTC", ProjectName, DateTime.UtcNow.ToString()));
             }
+            return true;
         }
 
-        private void CheckLogPathExists()
+        private bool CheckLogPathExists()
         {
             if (!File.Exists(LogPath))
             {
@@ -291,6 +301,7 @@ namespace CI
                     sw.WriteLine(string.Format("Build Server Log File Created: {0} UTC", DateTime.UtcNow.ToString()));
                 }
             }
+            return true;
         }
 
 
