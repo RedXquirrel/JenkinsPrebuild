@@ -30,6 +30,7 @@ namespace CI
         private string _nextBuildNumber;
         private bool _infoPlistFileExists;
         private int _CFBundleShortVersionStringLineNumber = 0;
+        private int _CFBundleVersionLineNumber = 0;
         private List<string> _infoPlistLineCollection = new List<string>();
 
         public override bool Execute()
@@ -43,8 +44,30 @@ namespace CI
             IdentifyCFBundleShortVersionStringLineNumber();
             InsertNextShortVersionBuildNumberInInfoPlistLineCollection();
 
+            InsertNextVersionBuildNumberInInfoPlistLineCollection();
+
             LogAfterBuildFinished();
             return true;
+        }
+
+        private void InsertNextVersionBuildNumberInInfoPlistLineCollection()
+        {
+            var counter = 0;
+            foreach (var line in _infoPlistLineCollection)
+            {
+                if (line.Trim().Equals("<key>CFBundleVersion</key>"))
+                {
+                    if (File.Exists(LogPath))
+                    {
+                        _CFBundleVersionLineNumber = counter;
+                        using (StreamWriter sw = File.AppendText(LogPath))
+                        {
+                            sw.WriteLine(string.Format("     <keyCFBundleVersion</key> exists at line {0}", _CFBundleVersionLineNumber.ToString()));
+                        }
+                    }
+                }
+                counter++;
+            }
         }
 
         private void InsertNextShortVersionBuildNumberInInfoPlistLineCollection()
