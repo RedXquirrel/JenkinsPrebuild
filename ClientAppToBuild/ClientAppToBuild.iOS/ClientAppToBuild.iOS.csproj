@@ -180,7 +180,7 @@
       NextBuildNumberFilePath="$(MSBuildProjectDirectory)\..\..\..\nextBuildNumber"  
       LogPath="$(MSBuildProjectDirectory)\..\..\..\ClientAppToBuild.iOS.BeforeBuild.Log.txt" 
       ProjectName="$(MSBuildProjectFile)" 
-      InfoPlistPath="$(MSBuildProjectFile)\info.plist"
+      InfoPlistPath="$(MSBuildProjectDirectory)\info.plist"
       />
     <Message Text="Finishing iOS Before Build Task" Importance="normal" />
   </Target>
