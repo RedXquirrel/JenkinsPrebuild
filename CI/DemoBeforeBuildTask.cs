@@ -55,7 +55,7 @@ namespace CI
             {
                 using (StreamWriter sw = File.AppendText(LogPath))
                 {
-                    sw.WriteLine(string.Format("     FAIL BEFORE BUILD: {0}", message);
+                    sw.WriteLine(string.Format("     FAIL BEFORE BUILD: {0}", message));
                 }
             }
         }
