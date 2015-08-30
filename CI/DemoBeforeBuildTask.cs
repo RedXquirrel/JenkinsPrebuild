@@ -35,31 +35,42 @@ namespace CI
 
         public override bool Execute()
         {
-            if (!LogBeforeBuildStart()) return false;
-            if (!UpdateVersionNumberInInfoPlist()) return false;
-            if (!LogAfterBuildFinished()) return false;
+            if (!LogBeforeBuildStart()) { LogFailedMethod("LogBeforeBuildStart()"); return false; }
+            if (!UpdateVersionNumberInInfoPlist()) { LogFailedMethod("UpdateVersionNumberInInfoPlist()"); return false; }
+            if (!LogAfterBuildFinished()) { LogFailedMethod("LogAfterBuildFinished()"); return false; }
 
             return true;
         }
 
         private bool LogBeforeBuildStart()
         {
-            if (!CheckLogPathExists()) return false;
-            if (!LogBeforeBuildStarted()) return false;
+            if (!CheckLogPathExists()) { LogFailedMethod("CheckLogPathExists()"); return false; }
+            if (!LogBeforeBuildStarted()) { LogFailedMethod("LogBeforeBuildStarted()"); return false; }
             return true;
+        }
+
+        private void LogFailedMethod(string message)
+        {
+            if (File.Exists(LogPath))
+            {
+                using (StreamWriter sw = File.AppendText(LogPath))
+                {
+                    sw.WriteLine(string.Format("     FAIL BEFORE BUILD: {0}", message);
+                }
+            }
         }
 
         private bool UpdateVersionNumberInInfoPlist()
         {
-            if (!CheckNextBuildNumberFilePathExists()) return false;
-            if (!DeriveNextBuildNumber()) return false;
-            if (!CheckInfoPlistPathExists()) return false;
-            if (!CreateInfoPlistLineCollection()) return false;
-            if (!IdentifyCFBundleShortVersionStringLineNumber()) return false;
-            if (!InsertNextShortVersionBuildNumberInInfoPlistLineCollection()) return false;
-            if (!IdentifyNextVersionBuildNumberInInfoPlistLineCollection()) return false;
-            if (!InsertNextVersionBuildNumberInInfoPlistLineCollection()) return false;
-            if (!RewriteInfoPlist()) return false;
+            if (!CheckNextBuildNumberFilePathExists()) { LogFailedMethod("CheckNextBuildNumberFilePathExists()"); return false; }
+            if (!DeriveNextBuildNumber()) { LogFailedMethod("DeriveNextBuildNumber()"); return false; }
+            if (!CheckInfoPlistPathExists()) { LogFailedMethod("CheckInfoPlistPathExists()"); return false; }
+            if (!CreateInfoPlistLineCollection()) { LogFailedMethod("CreateInfoPlistLineCollection()"); return false; }
+            if (!IdentifyCFBundleShortVersionStringLineNumber()) { LogFailedMethod("IdentifyCFBundleShortVersionStringLineNumber()"); return false; }
+            if (!InsertNextShortVersionBuildNumberInInfoPlistLineCollection()) { LogFailedMethod("InsertNextShortVersionBuildNumberInInfoPlistLineCollection()"); return false; }
+            if (!IdentifyNextVersionBuildNumberInInfoPlistLineCollection()) { LogFailedMethod("IdentifyNextVersionBuildNumberInInfoPlistLineCollection()"); return false; }
+            if (!InsertNextVersionBuildNumberInInfoPlistLineCollection()) { LogFailedMethod("InsertNextVersionBuildNumberInInfoPlistLineCollection()"); return false; }
+            if (!RewriteInfoPlist()) { LogFailedMethod("RewriteInfoPlist()"); return false; }
             return true;
         }
 
