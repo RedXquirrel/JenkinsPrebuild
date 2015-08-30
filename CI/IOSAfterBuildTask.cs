@@ -60,12 +60,12 @@ namespace CI
                 sw.WriteLine(string.Format("     IPA Target Path {0}", destFile));
             }
 
-            //if (!System.IO.Directory.Exists(IPATargetDirectory))
-            //{
-            //    System.IO.Directory.CreateDirectory(IPATargetDirectory);
-            //}
+            if (!System.IO.Directory.Exists(IPATargetDirectory))
+            {
+                System.IO.Directory.CreateDirectory(IPATargetDirectory);
+            }
 
-            //System.IO.File.Copy(sourceFile, destFile, true);
+            System.IO.File.Copy(sourceFile, destFile, true);
 
             LogAfterBuildFinished();
             return true;

@@ -190,7 +190,7 @@
     <IOSAfterBuildTask 
       LogPath="$(MSBuildProjectDirectory)\..\..\..\ClientAppToBuild.iOS.AfterBuild.Log.txt" 
       ProjectName="$(MSBuildProjectFile)"
-      IPASourceFileName="JenkinsPrebuild.ipa"
+      IPASourceFileName="JenkinsPreBuild.ipa"
       IPATargetFileName="JenkinsPreBuild.{0}.ipa"
       IPASourceDirectory="$(MSBuildProjectDirectory)\bin\iPhone\Release\"
       IPATargetDirectory="$(MSBuildProjectDirectory)\..\..\..\IPAArchives\"
