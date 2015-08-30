@@ -19,8 +19,8 @@ namespace CI
         [Required]
         public string BuildNumberPrefix { get; set; }
 
-        [Required]
-        public string NextBuildNumberFilePath { get; set; }
+        //[Required]
+        //public string NextBuildNumberFilePath { get; set; }
 
         public override bool Execute()
         {
