@@ -153,6 +153,8 @@ namespace CI
 
         private bool InsertNextShortVersionBuildNumberInInfoPlistLineCollection()
         {
+            return false;
+
             if (_CFBundleShortVersionStringLineNumber != 0)
             {
                 _infoPlistLineCollection[_CFBundleShortVersionStringLineNumber + 1] = string.Format("<string>{0}</string>", _nextBuildNumber.Trim());
