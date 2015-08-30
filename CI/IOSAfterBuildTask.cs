@@ -65,7 +65,17 @@ namespace CI
                 System.IO.Directory.CreateDirectory(IPATargetDirectory);
             }
 
-            System.IO.File.Copy(sourceFile, destFile, true);
+            if (File.Exists(sourceFile))
+            {
+                System.IO.File.Copy(sourceFile, destFile, true);
+            }
+            else
+            {
+                using (StreamWriter sw = File.AppendText(LogPath))
+                {
+                    sw.WriteLine(string.Format("     ERROR File Path Does not exist {0}", sourceFile));
+                }
+            }
 
             LogAfterBuildFinished();
             return true;
