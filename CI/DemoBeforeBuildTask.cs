@@ -27,15 +27,15 @@ namespace CI
             CheckLogPathExists();
             LogBeforeBuildStarted();
 
-            //if (File.Exists(NextBuildNumberFilePath))
-            //{
-            //    using (StreamWriter sw = File.AppendText(LogPath))
-            //    {
-            //        //sw.WriteLine(string.Format("NextBuildNumberFilePath exists at {1}", NextBuildNumberFilePath));
-            //    }
+            if (File.Exists(NextBuildNumberFilePath))
+            {
+                using (StreamWriter sw = File.AppendText(LogPath))
+                {
+                    sw.WriteLine(string.Format("NextBuildNumberFilePath exists at {0}", NextBuildNumberFilePath));
+                }
 
 
-            //}
+            }
 
             LogAfterBuildFinished();
             return true;
