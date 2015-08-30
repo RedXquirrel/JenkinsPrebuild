@@ -29,7 +29,7 @@ namespace CI
         private string _nextBuildNumberSuffix;
         private string _nextBuildNumber;
         private bool _infoPlistFileExists;
-        private int _CFBundleShortVersionStringLineNumber;
+        private int _CFBundleShortVersionStringLineNumber = 0;
         private List<string> _infoPlistLineCollection = new List<string>();
 
         public override bool Execute()
@@ -40,11 +40,38 @@ namespace CI
             DeriveNextBuildNumber();
             CheckInfoPlistPathExists();
             CreateInfoPlistLineCollection();
+            IdentifyCFBundleShortVersionStringLineNumber();
+            InsertNextShortVersionBuildNumberInInfoPlistLineCollection();
 
-            var counter = 0;
-            foreach(var line in _infoPlistLineCollection)
+            LogAfterBuildFinished();
+            return true;
+        }
+
+        private void InsertNextShortVersionBuildNumberInInfoPlistLineCollection()
+        {
+            if (_CFBundleShortVersionStringLineNumber != 0)
             {
-                if(line.Trim().Equals("<key>CFBundleShortVersionString</key>"))
+                _infoPlistLineCollection[_CFBundleShortVersionStringLineNumber + 1] = string.Format("<string>{0}</string>", _nextBuildNumber);
+
+                if (File.Exists(LogPath))
+                {
+                    using (StreamWriter sw = File.AppendText(LogPath))
+                    {
+                        foreach (var line in _infoPlistLineCollection)
+                        {
+                            sw.WriteLine(string.Format("     {0}", line));
+                        }
+                    }
+                }
+            }
+        }
+
+        private void IdentifyCFBundleShortVersionStringLineNumber()
+        {
+            var counter = 0;
+            foreach (var line in _infoPlistLineCollection)
+            {
+                if (line.Trim().Equals("<key>CFBundleShortVersionString</key>"))
                 {
                     if (File.Exists(LogPath))
                     {
@@ -57,10 +84,6 @@ namespace CI
                 }
                 counter++;
             }
-
-
-            LogAfterBuildFinished();
-            return true;
         }
 
         private void CreateInfoPlistLineCollection()
