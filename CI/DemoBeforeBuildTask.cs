@@ -44,7 +44,29 @@ namespace CI
             IdentifyCFBundleShortVersionStringLineNumber();
             InsertNextShortVersionBuildNumberInInfoPlistLineCollection();
             IdentifyNextVersionBuildNumberInInfoPlistLineCollection();
+            InsertNextVersionBuildNumberInInfoPlistLineCollection();
 
+            if (File.Exists(InfoPlistPath))
+            {
+                _infoPlistFileExists = true;
+                using (StreamWriter sw = File.WriteAllLines(LogPath, _infoPlistLineCollection.ToArray<string>())
+                {
+                    if (File.Exists(LogPath))
+                    {
+                        using (StreamWriter sw = File.AppendText(LogPath))
+                        {
+                            sw.WriteLine(string.Format("     info.plist Path rewritten at {0}", LogPath));
+                        }
+                    }
+                }
+            }
+
+            LogAfterBuildFinished();
+            return true;
+        }
+
+        private void InsertNextVersionBuildNumberInInfoPlistLineCollection()
+        {
             if (_CFBundleVersionLineNumber != 0)
             {
                 _infoPlistLineCollection[_CFBundleVersionLineNumber + 1] = string.Format("<string>{0}</string>", BuildNumberPrefix.Trim());
@@ -60,9 +82,6 @@ namespace CI
                     }
                 }
             }
-
-            LogAfterBuildFinished();
-            return true;
         }
 
         private void IdentifyNextVersionBuildNumberInInfoPlistLineCollection()
