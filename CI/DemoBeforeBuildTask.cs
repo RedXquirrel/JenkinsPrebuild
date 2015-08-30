@@ -60,6 +60,10 @@ namespace CI
                     }
                 }
             }
+            else
+            {
+                return false;
+            }
 
             LogAfterBuildFinished();
             return true;
@@ -81,6 +85,14 @@ namespace CI
                         }
                     }
                 }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
             }
         }
 
@@ -98,6 +110,10 @@ namespace CI
                         {
                             sw.WriteLine(string.Format("     <keyCFBundleVersion</key> exists at line {0}", _CFBundleVersionLineNumber.ToString()));
                         }
+                    }
+                    else
+                    {
+                        return false;
                     }
                 }
                 counter++;
@@ -120,6 +136,14 @@ namespace CI
                         }
                     }
                 }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
             }
         }
 
@@ -138,6 +162,10 @@ namespace CI
                             sw.WriteLine(string.Format("     <key>CFBundleShortVersionString</key> exists at line {0}", _CFBundleShortVersionStringLineNumber.ToString()));
                         }
                     }
+                    else
+                    {
+                        return false;
+                    }
                 }
                 counter++;
             }
@@ -145,25 +173,29 @@ namespace CI
 
         private void CreateInfoPlistLineCollection()
         {
-                    if (_infoPlistFileExists)
+            if (_infoPlistFileExists)
+            {
+                string line = string.Empty;
+                System.IO.StreamReader file = new System.IO.StreamReader(InfoPlistPath);
+                while ((line = file.ReadLine()) != null)
+                {
+                    _infoPlistLineCollection.Add(line);
+                }
+
+                file.Close();
+
+                if (File.Exists(LogPath))
+                {
+                    using (StreamWriter sw = File.AppendText(LogPath))
                     {
-                        string line = string.Empty;
-                        System.IO.StreamReader file = new System.IO.StreamReader(InfoPlistPath);
-                        while ((line = file.ReadLine()) != null)
-                        {
-                            _infoPlistLineCollection.Add(line);
-                        }
-
-                        file.Close();
-
-                        if (File.Exists(LogPath))
-                        {
-                            using (StreamWriter sw = File.AppendText(LogPath))
-                            {
-                                sw.WriteLine(string.Format("     info.plist line collection created with {0} lines", _infoPlistLineCollection.Count.ToString()));
-                            }
-                        }
+                        sw.WriteLine(string.Format("     info.plist line collection created with {0} lines", _infoPlistLineCollection.Count.ToString()));
                     }
+                }
+            }
+            else
+            {
+                return false;
+            }
         }
 
         private void CheckInfoPlistPathExists()
@@ -175,6 +207,11 @@ namespace CI
                     sw.WriteLine(string.Format("     info.plist Path declared as {0}", InfoPlistPath));
                 }
             }
+            else
+            {
+                return false;
+            }
+
 
             if (File.Exists(InfoPlistPath))
             {
@@ -184,6 +221,11 @@ namespace CI
                     sw.WriteLine(string.Format("     info.plist Path exists at {0}", InfoPlistPath));
                 }
             }
+            else
+            {
+                return false;
+            }
+
         }
 
         private void DeriveNextBuildNumber()
@@ -201,6 +243,11 @@ namespace CI
                     sw.WriteLine(string.Format("     NextBuildNumber is {0}", _nextBuildNumber));
                 }
             }
+            else
+            {
+                return false;
+            }
+
         }
 
         private void CheckNextBuildNumberFilePathExists()
@@ -212,6 +259,10 @@ namespace CI
                     sw.WriteLine(string.Format("     NextBuildNumberFilePath exists at {0}", NextBuildNumberFilePath));
                     _nextBuildNumberFilePathExists = true;
                 }
+            }
+            else
+            {
+                return false;
             }
         }
 
