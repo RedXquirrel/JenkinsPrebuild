@@ -22,23 +22,39 @@ namespace CI
         [Required]
         public string NextBuildNumberFilePath { get; set; }
 
+        private bool _nextBuildNumberFilePathExists;
+        private string _nextBuildNumberSuffix;
+
         public override bool Execute()
         {
             CheckLogPathExists();
             LogBeforeBuildStarted();
+            CheckNextBuildNumberFilePathExists();
 
+            if (_nextBuildNumberFilePathExists)
+            {
+                _nextBuildNumberSuffix = System.IO.File.ReadAllText(NextBuildNumberFilePath);
+                using (StreamWriter sw = File.AppendText(LogPath))
+                {
+                    sw.WriteLine(string.Format("NextBuildNumberSuffix is {0}", _nextBuildNumberSuffix));
+                    sw.WriteLine(string.Format("NextBuildNumber is {0}{1}", BuildNumberPrefix, _nextBuildNumberSuffix));
+                }
+            }
+
+            LogAfterBuildFinished();
+            return true;
+        }
+
+        private void CheckNextBuildNumberFilePathExists()
+        {
             if (File.Exists(NextBuildNumberFilePath))
             {
                 using (StreamWriter sw = File.AppendText(LogPath))
                 {
                     sw.WriteLine(string.Format("NextBuildNumberFilePath exists at {0}", NextBuildNumberFilePath));
+                    _nextBuildNumberFilePathExists = true;
                 }
-
-
             }
-
-            LogAfterBuildFinished();
-            return true;
         }
 
         private void LogAfterBuildFinished()
