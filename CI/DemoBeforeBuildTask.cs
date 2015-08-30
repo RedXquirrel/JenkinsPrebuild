@@ -49,14 +49,14 @@ namespace CI
             if (File.Exists(InfoPlistPath))
             {
                 _infoPlistFileExists = true;
-                using (StreamWriter sw = File.WriteAllLines(LogPath, _infoPlistLineCollection.ToArray<string>())
+                
+                File.WriteAllLines(LogPath, _infoPlistLineCollection.ToArray<string>());
+
+                if (File.Exists(LogPath))
                 {
-                    if (File.Exists(LogPath))
+                    using (StreamWriter sw = File.AppendText(LogPath))
                     {
-                        using (StreamWriter sw = File.AppendText(LogPath))
-                        {
-                            sw.WriteLine(string.Format("     info.plist Path rewritten at {0}", LogPath));
-                        }
+                        sw.WriteLine(string.Format("     info.plist Path rewritten at {0}", LogPath));
                     }
                 }
             }
