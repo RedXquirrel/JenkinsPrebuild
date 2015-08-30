@@ -31,7 +31,7 @@ namespace CI
 
         public override bool Execute()
         {
-            return Run();
+            return Run().Result;
         }
 
         private async Task<bool> Run()
