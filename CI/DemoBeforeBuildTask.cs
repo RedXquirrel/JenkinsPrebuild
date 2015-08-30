@@ -35,6 +35,10 @@ namespace CI
             LogBeforeBuildStarted();
             CheckNextBuildNumberFilePathExists();
             DeriveNextBuildNumber();
+            using (StreamWriter sw = File.AppendText(LogPath))
+            {
+                sw.WriteLine(string.Format("     info.plist Path declared as {0}", InfoPlistPath));
+            }
             CheckInfoPlistPathExists();
 
             LogAfterBuildFinished();
