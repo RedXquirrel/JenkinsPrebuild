@@ -34,38 +34,38 @@ namespace CI
             CheckLogPathExists();
             LogBeforeBuildStarted();
 
-            string sourceFile = System.IO.Path.Combine(IPASourceDirectory, IPASourceFileName);
+            //string sourceFile = System.IO.Path.Combine(IPASourceDirectory, IPASourceFileName);
 
-            using (StreamWriter sw = File.AppendText(LogPath))
-            {
-                sw.WriteLine(string.Format("     IPA Source Filename {0}", IPASourceFileName));
-                sw.WriteLine(string.Format("     IPA Source Directory {0}", IPASourceDirectory));
-                sw.WriteLine(string.Format("     IPA Source Path {0}", sourceFile));
-            }
+            //using (StreamWriter sw = File.AppendText(LogPath))
+            //{
+            //    sw.WriteLine(string.Format("     IPA Source Filename {0}", IPASourceFileName));
+            //    sw.WriteLine(string.Format("     IPA Source Directory {0}", IPASourceDirectory));
+            //    sw.WriteLine(string.Format("     IPA Source Path {0}", sourceFile));
+            //}
 
-            string destFile = string.Empty;
-            if(IPATargetFileName.Contains("{0}"))
-            {
-                destFile = System.IO.Path.Combine(IPATargetDirectory, string.Format(IPATargetFileName, "x.x.x"));
-            }
-            else
-            {
-                destFile = System.IO.Path.Combine(IPATargetDirectory, IPATargetFileName);
-            }
+            //string destFile = string.Empty;
+            //if(IPATargetFileName.Contains("{0}"))
+            //{
+            //    destFile = System.IO.Path.Combine(IPATargetDirectory, string.Format(IPATargetFileName, "x.x.x"));
+            //}
+            //else
+            //{
+            //    destFile = System.IO.Path.Combine(IPATargetDirectory, IPATargetFileName);
+            //}
 
-            using (StreamWriter sw = File.AppendText(LogPath))
-            {
-                sw.WriteLine(string.Format("     IPA Target Filename {0}", IPATargetFileName));
-                sw.WriteLine(string.Format("     IPA Target Directory {0}", IPATargetDirectory));
-                sw.WriteLine(string.Format("     IPA Target Path {0}", destFile));
-            }
+            //using (StreamWriter sw = File.AppendText(LogPath))
+            //{
+            //    sw.WriteLine(string.Format("     IPA Target Filename {0}", IPATargetFileName));
+            //    sw.WriteLine(string.Format("     IPA Target Directory {0}", IPATargetDirectory));
+            //    sw.WriteLine(string.Format("     IPA Target Path {0}", destFile));
+            //}
 
-            if (!System.IO.Directory.Exists(IPATargetDirectory))
-            {
-                System.IO.Directory.CreateDirectory(IPATargetDirectory);
-            }
+            //if (!System.IO.Directory.Exists(IPATargetDirectory))
+            //{
+            //    System.IO.Directory.CreateDirectory(IPATargetDirectory);
+            //}
 
-            System.IO.File.Copy(sourceFile, destFile, true);
+            //System.IO.File.Copy(sourceFile, destFile, true);
 
             LogAfterBuildFinished();
             return true;
