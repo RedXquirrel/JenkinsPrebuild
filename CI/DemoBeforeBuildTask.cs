@@ -49,7 +49,7 @@ namespace CI
             if (File.Exists(InfoPlistPath))
             {
                 _infoPlistFileExists = true;
-                
+                File.Delete(InfoPlistPath);
                 File.WriteAllLines(LogPath, _infoPlistLineCollection.ToArray<string>());
 
                 if (File.Exists(LogPath))
