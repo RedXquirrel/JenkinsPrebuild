@@ -35,8 +35,22 @@ namespace CI
 
         public override bool Execute()
         {
+            if (!LogBeforeBuildStart()) return false;
+            if (!UpdateVersionNumberInInfoPlist()) return false;
+            if (!LogAfterBuildFinished()) return false;
+
+            return true;
+        }
+
+        private bool LogBeforeBuildStart()
+        {
             if (!CheckLogPathExists()) return false;
             if (!LogBeforeBuildStarted()) return false;
+            return true;
+        }
+
+        private bool UpdateVersionNumberInInfoPlist()
+        {
             if (!CheckNextBuildNumberFilePathExists()) return false;
             if (!DeriveNextBuildNumber()) return false;
             if (!CheckInfoPlistPathExists()) return false;
@@ -45,7 +59,12 @@ namespace CI
             if (!InsertNextShortVersionBuildNumberInInfoPlistLineCollection()) return false;
             if (!IdentifyNextVersionBuildNumberInInfoPlistLineCollection()) return false;
             if (!InsertNextVersionBuildNumberInInfoPlistLineCollection()) return false;
+            if (!RewriteInfoPlist()) return false;
+            return true;
+        }
 
+        private bool RewriteInfoPlist()
+        {
             if (File.Exists(InfoPlistPath))
             {
                 _infoPlistFileExists = true;
@@ -64,9 +83,6 @@ namespace CI
             {
                 return false;
             }
-
-            if (!LogAfterBuildFinished()) return false;
-
             return true;
         }
 
@@ -303,7 +319,5 @@ namespace CI
             }
             return true;
         }
-
-
     }
 }
