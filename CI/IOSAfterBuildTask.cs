@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CI
 {
-    public class DemoAfterBuildTask : Microsoft.Build.Utilities.Task
+    public class IOSAfterBuildTask : Microsoft.Build.Utilities.Task
     {
         [Required]
         public string ProjectName { get; set; }
