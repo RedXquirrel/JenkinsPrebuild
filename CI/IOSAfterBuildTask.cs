@@ -43,22 +43,22 @@ namespace CI
                 sw.WriteLine(string.Format("     IPA Source Path {0}", sourceFile));
             }
 
-            //string destFile = string.Empty;
-            //if(IPATargetFileName.Contains("{0}"))
-            //{
-            //    destFile = System.IO.Path.Combine(IPATargetDirectory, string.Format(IPATargetFileName, "x.x.x"));
-            //}
-            //else
-            //{
-            //    destFile = System.IO.Path.Combine(IPATargetDirectory, IPATargetFileName);
-            //}
+            string destFile = string.Empty;
+            if (IPATargetFileName.Contains("{0}"))
+            {
+                destFile = System.IO.Path.Combine(IPATargetDirectory, string.Format(IPATargetFileName, "x.x.x"));
+            }
+            else
+            {
+                destFile = System.IO.Path.Combine(IPATargetDirectory, IPATargetFileName);
+            }
 
-            //using (StreamWriter sw = File.AppendText(LogPath))
-            //{
-            //    sw.WriteLine(string.Format("     IPA Target Filename {0}", IPATargetFileName));
-            //    sw.WriteLine(string.Format("     IPA Target Directory {0}", IPATargetDirectory));
-            //    sw.WriteLine(string.Format("     IPA Target Path {0}", destFile));
-            //}
+            using (StreamWriter sw = File.AppendText(LogPath))
+            {
+                sw.WriteLine(string.Format("     IPA Target Filename {0}", IPATargetFileName));
+                sw.WriteLine(string.Format("     IPA Target Directory {0}", IPATargetDirectory));
+                sw.WriteLine(string.Format("     IPA Target Path {0}", destFile));
+            }
 
             //if (!System.IO.Directory.Exists(IPATargetDirectory))
             //{
