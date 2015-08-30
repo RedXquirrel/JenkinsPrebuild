@@ -41,6 +41,7 @@ namespace CI
 
             if (_infoPlistFileExists)
             {
+                string line = string.Empty;
                 System.IO.StreamReader file = new System.IO.StreamReader(InfoPlistPath);
                 while ((line = file.ReadLine()) != null)
                 {
