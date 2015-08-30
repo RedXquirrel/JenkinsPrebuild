@@ -187,7 +187,14 @@
   <UsingTask AssemblyFile="$(MSBuildProjectDirectory)\..\..\CI\bin\Debug\CI.dll" TaskName="CI.IOSAfterBuildTask" />
   <Target Name="AfterBuild">
     <Message Text="Starting iOS After Build Task" Importance="normal" />
-    <IOSAfterBuildTask LogPath="$(MSBuildProjectDirectory)\..\..\..\ClientAppToBuild.iOS.AfterBuild.Log.txt" ProjectName="$(MSBuildProjectFile)" />
+    <IOSAfterBuildTask 
+      LogPath="$(MSBuildProjectDirectory)\..\..\..\ClientAppToBuild.iOS.AfterBuild.Log.txt" 
+      ProjectName="$(MSBuildProjectFile)"
+      IPASourceFileName="JenkinsPrebuild.ipa"
+      IPATargetFileName="JenkinsPreBuild.{0}.ipa"
+      IPASourceDirectory="$(MSBuildProjectDirectory)\bin\iPhone\Release\"
+      IPATargetDirectory="$(MSBuildProjectDirectory)\..\..\..\IPAArchives\"
+      />
     <Message Text="Finishing iOS After Build Task" Importance="normal" />
   </Target>
 

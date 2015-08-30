@@ -16,14 +16,50 @@ namespace CI
         [Required]
         public string LogPath { get; set; }
 
+        [Required]
+        public string IPASourceFileName { get; set; }
+
+        [Required]
+        public string IPATargetFileName { get; set; }
+
+        [Required]
+        public string IPASourceDirectory { get; set; }
+
+        [Required]
+        public string IPATargetDirectory { get; set; }
+
+
         public override bool Execute()
         {
             CheckLogPathExists();
             LogBeforeBuildStarted();
 
+            string sourceFile = System.IO.Path.Combine(IPASourceDirectory, IPASourceFileName);
 
+            string destFile = string.Empty;
+            if(IPATargetFileName.Contains("{0}"))
+            {
+                destFile = System.IO.Path.Combine(IPATargetDirectory, string.Format(IPATargetFileName, "x.x.x"));
+            }
+            else
+            {
+                destFile = System.IO.Path.Combine(IPATargetDirectory, IPATargetFileName);
+            }
 
-            
+            using (StreamWriter sw = File.AppendText(LogPath))
+            {
+                sw.WriteLine(string.Format("     IPA Target Filename {0}", IPATargetFileName));
+                sw.WriteLine(string.Format("     IPA Target Directory {0}", IPATargetDirectory));
+                sw.WriteLine(string.Format("     IPA Target Path {0}", destFile));
+            }
+
+            if (!System.IO.Directory.Exists(IPATargetDirectory))
+            {
+                System.IO.Directory.CreateDirectory(IPATargetDirectory);
+            }
+
+            System.IO.File.Copy(sourceFile, destFile, true);
+
             LogAfterBuildFinished();
             return true;
         }
