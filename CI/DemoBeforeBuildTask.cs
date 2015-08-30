@@ -29,6 +29,7 @@ namespace CI
         private string _nextBuildNumberSuffix;
         private string _nextBuildNumber;
         private bool _infoPlistFileExists;
+        private int _CFBundleShortVersionStringLineNumber;
         private List<string> _infoPlistLineCollection = new List<string>();
 
         public override bool Execute()
@@ -38,30 +39,51 @@ namespace CI
             CheckNextBuildNumberFilePathExists();
             DeriveNextBuildNumber();
             CheckInfoPlistPathExists();
+            CreateInfoPlistLineCollection();
 
-            if (_infoPlistFileExists)
+            var counter = 0;
+            foreach(var line in _infoPlistLineCollection)
             {
-                string line = string.Empty;
-                System.IO.StreamReader file = new System.IO.StreamReader(InfoPlistPath);
-                while ((line = file.ReadLine()) != null)
+                if(line.Trim().Equals("<key>CFBundleShortVersionString</key>"))
                 {
-                    _infoPlistLineCollection.Add(line);
-                }
-
-                file.Close();
-
-                if (File.Exists(LogPath))
-                {
-                    using (StreamWriter sw = File.AppendText(LogPath))
+                    if (File.Exists(LogPath))
                     {
-                        sw.WriteLine(string.Format("     info.plist line collection created with {0} lines", _infoPlistLineCollection.Count.ToString()));
+                        _CFBundleShortVersionStringLineNumber = counter;
+                        using (StreamWriter sw = File.AppendText(LogPath))
+                        {
+                            sw.WriteLine(string.Format("     <key>CFBundleShortVersionString</key> exists at line {0}", _CFBundleShortVersionStringLineNumber.ToString()));
+                        }
                     }
                 }
+                counter++;
             }
 
 
             LogAfterBuildFinished();
             return true;
+        }
+
+        private void CreateInfoPlistLineCollection()
+        {
+                    if (_infoPlistFileExists)
+                    {
+                        string line = string.Empty;
+                        System.IO.StreamReader file = new System.IO.StreamReader(InfoPlistPath);
+                        while ((line = file.ReadLine()) != null)
+                        {
+                            _infoPlistLineCollection.Add(line);
+                        }
+
+                        file.Close();
+
+                        if (File.Exists(LogPath))
+                        {
+                            using (StreamWriter sw = File.AppendText(LogPath))
+                            {
+                                sw.WriteLine(string.Format("     info.plist line collection created with {0} lines", _infoPlistLineCollection.Count.ToString()));
+                            }
+                        }
+                    }
         }
 
         private void CheckInfoPlistPathExists()
