@@ -36,8 +36,8 @@ namespace CI
                 _nextBuildNumberSuffix = System.IO.File.ReadAllText(NextBuildNumberFilePath);
                 using (StreamWriter sw = File.AppendText(LogPath))
                 {
-                    sw.WriteLine(string.Format("NextBuildNumberSuffix is {0}", _nextBuildNumberSuffix));
-                    sw.WriteLine(string.Format("NextBuildNumber is {0}{1}", BuildNumberPrefix, _nextBuildNumberSuffix));
+                    sw.WriteLine(string.Format("     NextBuildNumberSuffix is {0}", _nextBuildNumberSuffix));
+                    sw.WriteLine(string.Format("     NextBuildNumber is {0}{1}", BuildNumberPrefix, _nextBuildNumberSuffix));
                 }
             }
 
@@ -51,7 +51,7 @@ namespace CI
             {
                 using (StreamWriter sw = File.AppendText(LogPath))
                 {
-                    sw.WriteLine(string.Format("NextBuildNumberFilePath exists at {0}", NextBuildNumberFilePath));
+                    sw.WriteLine(string.Format("     NextBuildNumberFilePath exists at {0}", NextBuildNumberFilePath));
                     _nextBuildNumberFilePathExists = true;
                 }
             }
