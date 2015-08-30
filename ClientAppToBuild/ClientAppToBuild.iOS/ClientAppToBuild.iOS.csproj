@@ -175,7 +175,13 @@
   <UsingTask AssemblyFile="$(MSBuildProjectDirectory)\..\..\CI\bin\Debug\CI.dll" TaskName="CI.DemoBeforeBuildTask" />
   <Target Name="BeforeBuild">
     <Message Text="Starting iOS Before Build Task" Importance="normal" />
-    <DemoBeforeBuildTask BuildNumberPrefix="0.0." NextBuildNumberFilePath="$(MSBuildProjectDirectory)\..\..\..\nextBuildNumber"  LogPath="$(MSBuildProjectDirectory)\..\..\..\ClientAppToBuild.iOS.BeforeBuild.Log.txt" ProjectName="$(MSBuildProjectFile)" />
+    <DemoBeforeBuildTask 
+      BuildNumberPrefix="0.0." 
+      NextBuildNumberFilePath="$(MSBuildProjectDirectory)\..\..\..\nextBuildNumber"  
+      LogPath="$(MSBuildProjectDirectory)\..\..\..\ClientAppToBuild.iOS.BeforeBuild.Log.txt" 
+      ProjectName="$(MSBuildProjectFile)" 
+      InfoPlistPath="$(MSBuildProjectFile)\info.plist"
+      />
     <Message Text="Finishing iOS Before Build Task" Importance="normal" />
   </Target>
   <UsingTask AssemblyFile="$(MSBuildProjectDirectory)\..\..\CI\bin\Debug\CI.dll" TaskName="CI.DemoAfterBuildTask" />

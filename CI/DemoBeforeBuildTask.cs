@@ -22,27 +22,48 @@ namespace CI
         [Required]
         public string NextBuildNumberFilePath { get; set; }
 
+        [Required]
+        public string InfoPlistPath { get; set; }
+
         private bool _nextBuildNumberFilePathExists;
         private string _nextBuildNumberSuffix;
+        private string _nextBuildNumber;
 
         public override bool Execute()
         {
             CheckLogPathExists();
             LogBeforeBuildStarted();
             CheckNextBuildNumberFilePathExists();
-
-            if (_nextBuildNumberFilePathExists)
-            {
-                _nextBuildNumberSuffix = System.IO.File.ReadAllText(NextBuildNumberFilePath);
-                using (StreamWriter sw = File.AppendText(LogPath))
-                {
-                    sw.WriteLine(string.Format("     NextBuildNumberSuffix is {0}", _nextBuildNumberSuffix));
-                    sw.WriteLine(string.Format("     NextBuildNumber is {0}{1}", BuildNumberPrefix, _nextBuildNumberSuffix));
-                }
-            }
+            DeriveNextBuildNumber();
+            CheckInfoPlistPathExists();
 
             LogAfterBuildFinished();
             return true;
+        }
+
+        private void CheckInfoPlistPathExists()
+        {
+            if (File.Exists(InfoPlistPath))
+            {
+                using (StreamWriter sw = File.AppendText(LogPath))
+                {
+                    sw.WriteLine(string.Format("     info.plist Path exists at {0}", InfoPlistPath));
+                }
+            }
+        }
+
+        private void DeriveNextBuildNumber()
+        {
+            if (_nextBuildNumberFilePathExists)
+            {
+                _nextBuildNumberSuffix = System.IO.File.ReadAllText(NextBuildNumberFilePath);
+                _nextBuildNumber = string.Format("{0}{1}", BuildNumberPrefix, _nextBuildNumberSuffix);
+                using (StreamWriter sw = File.AppendText(LogPath))
+                {
+                    sw.WriteLine(string.Format("     NextBuildNumberSuffix is {0}", _nextBuildNumberSuffix));
+                    sw.WriteLine(string.Format("     NextBuildNumber is {0}", _nextBuildNumber));
+                }
+            }
         }
 
         private void CheckNextBuildNumberFilePathExists()
