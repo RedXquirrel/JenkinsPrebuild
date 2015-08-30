@@ -31,6 +31,11 @@ namespace CI
 
         public override bool Execute()
         {
+            return Run();
+        }
+
+        private async Task<bool> Run()
+        {
             CheckLogPathExists();
             LogBeforeBuildStarted();
 
@@ -64,7 +69,7 @@ namespace CI
             {
                 System.IO.Directory.CreateDirectory(IPATargetDirectory);
             }
-
+            await Task.Delay(5000);
             if (File.Exists(sourceFile))
             {
                 System.IO.File.Copy(sourceFile, destFile, true);
