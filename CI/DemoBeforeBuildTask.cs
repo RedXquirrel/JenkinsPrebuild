@@ -59,7 +59,7 @@ namespace CI
                     {
                         foreach (var line in _infoPlistLineCollection)
                         {
-                            sw.WriteLine(string.Format("     {0}", line));
+                            sw.WriteLine(string.Format("     {0}", line.Trim()));
                         }
                     }
                 }
