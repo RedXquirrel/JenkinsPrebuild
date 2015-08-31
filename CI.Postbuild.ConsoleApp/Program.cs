@@ -10,7 +10,7 @@ namespace CI.Postbuild.ConsoleApp
     {
         static void Main(string[] args)
         {
-            CI.IOSAfterBuildTask = new IOSAfterBuildTask();
+            CI.IOSAfterBuildTask postBuild = new IOSAfterBuildTask();
 
 
         }
