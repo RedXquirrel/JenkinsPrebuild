@@ -42,6 +42,12 @@ namespace CI
             {
                 return false;
             }
+
+            using (StreamWriter sw = File.AppendText(LogPath))
+            {
+                sw.WriteLine(string.Format("     File Copied to: {0}", CIDLLDestinationPath));
+            }
+
             return true;
         }
 
