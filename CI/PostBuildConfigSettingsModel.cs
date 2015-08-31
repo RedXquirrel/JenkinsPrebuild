@@ -10,6 +10,7 @@ namespace CI
     {
         public string ProjectName { get; set; }
         public string NextBuildNumberFilePath { get; set; }
+        public string NextBuildNumber { get; set; }
         public string IPASourceFileName { get; set; }
         public string IPATargetFileName { get; set; }
         public string IPASourceDirectory { get; set; }

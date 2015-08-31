@@ -73,12 +73,22 @@ namespace CI
 
         private bool CreatePostBuildJsonFile()
         {
+            if (!CheckNextBuildNumberFilePathExists()) { LogFailedMethod("CheckNextBuildNumberFilePathExists()"); return false; }
+
             try
             {
+                string nextBuildNumber = "x.x.x";
+                if (_nextBuildNumberFilePathExists)
+                {
+                    var _nextBuildNumberSuffix = System.IO.File.ReadAllText(NextBuildNumberFilePath);
+                    nextBuildNumber = string.Format("{0}.{1}", BuildNumberPrefix, _nextBuildNumberSuffix);
+                }
+
                 string json = JsonConvert.SerializeObject(new PostBuildConfigSettingsModel
                 {
                     ProjectName = ProjectName,
                     NextBuildNumberFilePath = NextBuildNumberFilePath,
+                    NextBuildNumber = nextBuildNumber,
                     IPASourceDirectory = IPASourceDirectory,
                     IPASourceFileName = IPASourceFileName,
                     IPATargetDirectory = IPATargetDirectory,

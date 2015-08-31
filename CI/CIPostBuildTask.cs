@@ -15,6 +15,7 @@ namespace CI
 
         public string ProjectName { get; set; }
         public string LogPath { get; set; }
+        public string NextBuildNumber { get; set; }
         public string IPASourceFileName { get; set; }
         public string IPATargetFileName { get; set; }
         public string IPASourceDirectory { get; set; }
@@ -62,6 +63,7 @@ namespace CI
 
             ProjectName = _config.ProjectName;
 
+            NextBuildNumber = _config.NextBuildNumber;
             IPASourceFileName = _config.IPASourceFileName;
             IPATargetFileName = _config.IPATargetFileName;
             IPASourceDirectory = _config.IPASourceDirectory;
@@ -79,7 +81,7 @@ namespace CI
             string destFile = string.Empty;
             if (IPATargetFileName.Contains("{0}"))
             {
-                destFile = System.IO.Path.Combine(IPATargetDirectory, string.Format(IPATargetFileName, "x.x.x"));
+                destFile = System.IO.Path.Combine(IPATargetDirectory, string.Format(IPATargetFileName, NextBuildNumber));
             }
             else
             {
