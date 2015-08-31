@@ -81,7 +81,8 @@ namespace CI
             string destFile = string.Empty;
             if (IPATargetFileName.Contains("{0}"))
             {
-                destFile = System.IO.Path.Combine(IPATargetDirectory, string.Format(IPATargetFileName, NextBuildNumber));
+                IPATargetFileName = string.Format(IPATargetFileName, NextBuildNumber);
+                destFile = System.IO.Path.Combine(IPATargetDirectory, IPATargetFileName);
             }
             else
             {
