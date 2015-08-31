@@ -115,22 +115,22 @@ namespace CI
                 }
             }
 
-            using (var dbx = new DropboxClient("562js3vx70samgc"))
-            {
-                var full = await dbx.Users.GetCurrentAccountAsync();
-
-                using (StreamWriter sw = File.AppendText(LogPath))
-                {
-                    sw.WriteLine(string.Format("     DropBox User DropBox Client Created for {0} - {1}", full.Name.DisplayName, full.Email));
-                }
-
-            //    //await UploadToCIDropBox(dbx, "test", "test.txt", "Hello Dropbox");
+            //using (var dbx = new DropboxClient("562js3vx70samgc"))
+            //{
+            //    //var full = await dbx.Users.GetCurrentAccountAsync();
 
             //    //using (StreamWriter sw = File.AppendText(LogPath))
             //    //{
-            //    //    sw.WriteLine("     Hello World uploaded to dropbox");
+            //    //    sw.WriteLine(string.Format("     DropBox User DropBox Client Created for {0} - {1}", full.Name.DisplayName, full.Email));
             //    //}
-            }
+
+            ////    //await UploadToCIDropBox(dbx, "test", "test.txt", "Hello Dropbox");
+
+            ////    //using (StreamWriter sw = File.AppendText(LogPath))
+            ////    //{
+            ////    //    sw.WriteLine("     Hello World uploaded to dropbox");
+            ////    //}
+            //}
 
             LogAfterBuildFinished();
             return true;
