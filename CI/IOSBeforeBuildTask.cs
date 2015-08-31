@@ -83,7 +83,7 @@ namespace CI
 
         private bool CreatePostBuildConfigDirectory()
         {
-            if (!System.IO.Directory.Exists(IPATargetDirectory))
+            if (!System.IO.Directory.Exists(PostBuildConfigDirectory))
             {
                 System.IO.Directory.CreateDirectory(PostBuildConfigDirectory);
             }
