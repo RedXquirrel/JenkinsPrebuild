@@ -197,5 +197,9 @@
       />
     <Message Text="Finishing iOS After Build Task" Importance="normal" />
   </Target>
+  <Target Name="AfterCompile">
+    <Message Text="Starting iOS After Compile Task" Importance="normal" />
+    <Message Text="Finishing iOS After Compile Task" Importance="normal" />
+  </Target>
 
 </Project>
