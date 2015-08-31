@@ -64,6 +64,7 @@
   <Target Name="BeforeBuild">
     <Message Text="Starting CI.PostBuild.ConsoleApp Before Build Task" Importance="normal" />
     <CIPostBuildConsoleAppBeforeBuild
+      ProjectName="$(MSBuildProjectFile)" 
       LogPath="$(MSBuildProjectDirectory)\..\..\..\CI.PostBuild.ConsoleApp.BeforeBuild.Log.txt"
       CIDLLPath="$(MSBuildProjectDirectory)\..\CI\bin\Debug\CI.dll"
       CIDLLDestinationPath="$(MSBuildProjectDirectory)\CI.dll"

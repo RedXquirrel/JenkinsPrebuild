@@ -1,6 +1,7 @@
 ﻿using Microsoft.Build.Framework;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,9 @@ namespace CI
 {
     public class CIPostBuildConsoleAppBeforeBuild : Microsoft.Build.Utilities.Task
     {
+        [Required]
+        public string ProjectName { get; set; }
+
         [Required]
         public string LogPath { get; set; }
         [Required]
@@ -26,6 +30,17 @@ namespace CI
             return true;
         }
 
+        private void LogFailedMethod(string message)
+        {
+            if (File.Exists(LogPath))
+            {
+                using (StreamWriter sw = File.AppendText(LogPath))
+                {
+                    sw.WriteLine(string.Format("     FAIL BEFORE BUILD: {0}", message));
+                }
+            }
+        }
+
         private bool LogBeforeBuildStart()
         {
             if (!CheckLogPathExists()) { LogFailedMethod("CheckLogPathExists()"); return false; }
@@ -33,10 +48,12 @@ namespace CI
             return true;
         }
 
-        private bool LogBeforeBuildStart()
+        private bool LogBeforeBuildStarted()
         {
-            if (!CheckLogPathExists()) { LogFailedMethod("CheckLogPathExists()"); return false; }
-            if (!LogBeforeBuildStarted()) { LogFailedMethod("LogBeforeBuildStarted()"); return false; }
+            using (StreamWriter sw = File.AppendText(LogPath))
+            {
+                sw.WriteLine(string.Format("Before Build Started for Project {0} at {1} UTC", ProjectName, DateTime.UtcNow.ToString()));
+            }
             return true;
         }
 
