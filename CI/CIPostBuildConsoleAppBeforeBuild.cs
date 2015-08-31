@@ -25,7 +25,29 @@ namespace CI
         {
             if (!LogBeforeBuildStart()) { LogFailedMethod("LogBeforeBuildStart()"); return false; }
 
+            if (!CheckCIDLLPathExists()) { LogFailedMethod("CheckCIDLLPathExists()"); return false; }
+
             //System.IO.File.Copy(CIDLLPath, CIDLLDestinationPath, true);
+
+            return true;
+        }
+
+        private bool CheckCIDLLPathExists()
+        {
+            if (File.Exists(CIDLLPath))
+            {
+                using (StreamWriter sw = File.AppendText(LogPath))
+                {
+                    sw.WriteLine(string.Format("     File Exists: {0}", CIDLLPath));
+                }
+            }
+            else
+            {
+                using (StreamWriter sw = File.AppendText(LogPath))
+                {
+                    sw.WriteLine(string.Format("     FAIL File does not exist: {0}", CIDLLPath));
+                }
+            }
 
             return true;
         }
