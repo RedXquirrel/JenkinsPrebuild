@@ -78,6 +78,7 @@ namespace CI
                 string json = JsonConvert.SerializeObject(new PostBuildConfigSettingsModel
                 {
                     ProjectName = ProjectName,
+                    NextBuildNumberFilePath = NextBuildNumberFilePath,
                     IPASourceDirectory = IPASourceDirectory,
                     IPASourceFileName = IPASourceFileName,
                     IPATargetDirectory = IPATargetDirectory,
