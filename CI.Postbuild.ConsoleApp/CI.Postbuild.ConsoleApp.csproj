@@ -62,4 +62,16 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup>
+    <MySourceFiles Include="$(MSBuildProjectDirectory)\..\CI\bin\Debug\CI.dll"/>
+  </ItemGroup>
+
+  <Target Name="BeforeBuild">
+    <Message Text="Starting CI.PostBuild.ConsoleApp Copy of CI.dll to project root" Importance="normal" />
+    <Copy
+        SourceFiles="@(MySourceFiles)"
+        DestinationFolder="$(MSBuildProjectDirectory)"
+        />
+    <Message Text="Finished CI.PostBuild.ConsoleApp Copy of CI.dll to project root" Importance="normal" />
+  </Target>
 </Project>
