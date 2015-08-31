@@ -23,10 +23,6 @@ namespace CI
 
         public async Task<bool> Run()
         {
-            // Temp text
-
-            int a = 1;
-            int b = a;
             string logDirectory = @"/Users/CI/.jenkins/jobs/Jenkins Prebuild/";
             string logPath = System.IO.Path.Combine(logDirectory, "MyExeLogFile.txt");
             LogPath = logPath;
