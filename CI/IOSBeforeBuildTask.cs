@@ -1,4 +1,5 @@
 ﻿using Microsoft.Build.Framework;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -25,6 +26,27 @@ namespace CI
         [Required]
         public string InfoPlistPath { get; set; }
 
+        #region Post Build Configuration File Settings
+
+        [Required]
+        public string PostBuildConfigFileName { get; set; }
+
+        [Required]
+        public string PostBuildConfigDirectory { get; set; }
+
+        [Required]
+        public string IPASourceFileName { get; set; }
+
+        [Required]
+        public string IPATargetFileName { get; set; }
+
+        [Required]
+        public string IPASourceDirectory { get; set; }
+
+        [Required]
+        public string IPATargetDirectory { get; set; }
+        #endregion
+
         private bool _nextBuildNumberFilePathExists;
         private string _nextBuildNumberSuffix;
         private string _nextBuildNumber;
@@ -35,10 +57,36 @@ namespace CI
 
         public override bool Execute()
         {
+            if (!CreatePostBuildConfigDirectory()) return false;
+
+            string json = JsonConvert.SerializeObject(new PostBuildConfigSettingsModel 
+                                                        { 
+                                                             IPASourceDirectory = IPASourceDirectory,
+                                                             IPASourceFileName = IPASourceFileName,
+                                                             IPATargetDirectory = IPATargetDirectory,
+                                                             IPATargetFileName = IPATargetFileName
+                                                        });
+
+            string configFilePath = System.IO.Path.Combine(PostBuildConfigDirectory, IPASourceFileName);
+
+            using (StreamWriter sw = File.CreateText(configFilePath))
+            {
+                sw.WriteLine(json);
+            }
+
             if (!LogBeforeBuildStart()) { LogFailedMethod("LogBeforeBuildStart()"); return false; }
             if (!UpdateVersionNumberInInfoPlist()) { LogFailedMethod("UpdateVersionNumberInInfoPlist()"); return false; }
             if (!LogAfterBuildFinished()) { LogFailedMethod("LogAfterBuildFinished()"); return false; }
 
+            return true;
+        }
+
+        private bool CreatePostBuildConfigDirectory()
+        {
+            if (!System.IO.Directory.Exists(IPATargetDirectory))
+            {
+                System.IO.Directory.CreateDirectory(PostBuildConfigDirectory);
+            }
             return true;
         }
 

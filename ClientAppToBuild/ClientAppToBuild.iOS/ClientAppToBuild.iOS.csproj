@@ -181,21 +181,15 @@
       LogPath="$(MSBuildProjectDirectory)\..\..\..\ClientAppToBuild.iOS.BeforeBuild.Log.txt" 
       ProjectName="$(MSBuildProjectFile)" 
       InfoPlistPath="$(MSBuildProjectDirectory)\info.plist"
-      />
-    <Message Text="Finishing iOS Before Build Task" Importance="normal" />
-  </Target>
-  <UsingTask AssemblyFile="$(MSBuildProjectDirectory)\..\..\CI\bin\Debug\CI.dll" TaskName="CI.IOSAfterBuildTask" />
-  <Target Name="AfterBuild" >
-    <Message Text="Starting iOS After Build Task" Importance="normal" />
-    <IOSAfterBuildTask 
-      LogPath="$(MSBuildProjectDirectory)\..\..\..\ClientAppToBuild.iOS.AfterBuild.Log.txt" 
-      ProjectName="$(MSBuildProjectFile)"
+
+      PostBuildConfigFileName="CIPostBuildConfig.Json"
+      PostBuildConfigDirectory="$(MSBuildProjectDirectory)\..\..\..\CIConfig\"
       IPASourceFileName="JenkinsPreBuild.ipa"
       IPATargetFileName="JenkinsPreBuild.{0}.ipa"
       IPASourceDirectory="$(MSBuildProjectDirectory)\bin\iPhone\Release\"
       IPATargetDirectory="$(MSBuildProjectDirectory)\..\..\..\IPAArchives\"
       />
-    <Message Text="Finishing iOS After Build Task" Importance="normal" />
+    <Message Text="Finishing iOS Before Build Task" Importance="normal" />
   </Target>
   <Target Name="AfterCompile">
     <Message Text="Starting iOS After Compile Task" Importance="normal" />
