@@ -27,8 +27,19 @@ namespace CI
 
             if (!CheckCIDLLPathExists()) { LogFailedMethod("CheckCIDLLPathExists()"); return false; }
 
-            //System.IO.File.Copy(CIDLLPath, CIDLLDestinationPath, true);
+            if (!CopyCIDLL()) { LogFailedMethod("CopyCIDLL()"); return false; }
+        }
 
+        private bool CopyCIDLL()
+        {
+            try
+            {
+                System.IO.File.Copy(CIDLLPath, CIDLLDestinationPath, true);
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
             return true;
         }
 
