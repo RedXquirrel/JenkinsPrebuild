@@ -1,4 +1,5 @@
 ﻿using Microsoft.Build.Framework;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,6 +11,8 @@ namespace CI
 {
     public class CIPostBuildTask
     {
+        private PostBuildConfigSettingsModel _config;
+
         public string ProjectName { get; set; }
         public string LogPath { get; set; }
         public string IPASourceFileName { get; set; }
@@ -20,18 +23,49 @@ namespace CI
         public async Task<bool> Run()
         {
 
-            string path = @"/Users/CI/.jenkins/jobs/Jenkins Prebuild/";
-            string logFile = System.IO.Path.Combine(path, "MyExeLogFile.txt");
-
-            using (StreamWriter sw = File.AppendText(logFile))
-            {
-                sw.WriteLine(string.Format("After Build Started for Project {0} at {1} UTC", ProjectName, DateTime.UtcNow.ToString()));
-            }
-
-            return true;
+            string logDirectory = @"/Users/CI/.jenkins/jobs/Jenkins Prebuild/";
+            string logPath = System.IO.Path.Combine(logDirectory, "MyExeLogFile.txt");
+            LogPath = logPath;
 
             CheckLogPathExists();
             LogBeforeBuildStarted();
+
+            string CIConfigDirectory = @"/Users/CI/.jenkins/jobs/Jenkins Prebuild/CIConfig";
+
+            using (StreamWriter sw = File.AppendText(logPath))
+            {
+                sw.WriteLine(string.Format("     Configuration Directory: {0}", CIConfigDirectory));
+            }
+
+            string CIConfigJsonFileName = @"CIPostBuildConfig.json";
+
+            using (StreamWriter sw = File.AppendText(logPath))
+            {
+                sw.WriteLine(string.Format("     Configuration File Name: {0}", CIConfigJsonFileName));
+            }
+
+            string CIConfigJsonFilePath = Path.Combine(CIConfigDirectory, CIConfigJsonFileName);
+
+            using (StreamWriter sw = File.AppendText(logPath))
+            {
+                sw.WriteLine(string.Format("     Configuration File Path: {0}", CIConfigJsonFilePath));
+            }
+
+            string configjson = File.ReadAllText(CIConfigJsonFilePath);
+
+            using (StreamWriter sw = File.AppendText(logPath))
+            {
+                sw.WriteLine(string.Format("     Configuration JSON: {0}", configjson));
+            }
+
+            _config = JsonConvert.DeserializeObject<PostBuildConfigSettingsModel>(configjson);
+
+            ProjectName = _config.ProjectName;
+
+            IPASourceFileName = _config.IPASourceFileName;
+            IPATargetFileName = _config.IPATargetFileName;
+            IPASourceDirectory = _config.IPASourceDirectory;
+            IPATargetDirectory = _config.IPATargetDirectory;
 
             string sourceFile = System.IO.Path.Combine(IPASourceDirectory, IPASourceFileName);
 
@@ -84,7 +118,7 @@ namespace CI
         {
             using (StreamWriter sw = File.AppendText(LogPath))
             {
-                sw.WriteLine(string.Format("After Build Finished for Project {0} at {1} UTC", ProjectName, DateTime.UtcNow.ToString()));
+                sw.WriteLine(string.Format("Post Build Finished for Project {0} at {1} UTC", ProjectName, DateTime.UtcNow.ToString()));
             }
         }
 
@@ -92,7 +126,7 @@ namespace CI
         {
             using (StreamWriter sw = File.AppendText(LogPath))
             {
-                sw.WriteLine(string.Format("After Build Started for Project {0} at {1} UTC", ProjectName, DateTime.UtcNow.ToString()));
+                sw.WriteLine(string.Format("Post Build Started for Project {0} at {1} UTC", ProjectName, DateTime.UtcNow.ToString()));
             }
         }
 
