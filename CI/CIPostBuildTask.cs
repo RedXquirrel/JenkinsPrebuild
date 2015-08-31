@@ -25,14 +25,14 @@ namespace CI
 
         public async Task<bool> Run()
         {
-            string logDirectory = @"/Users/CI/.jenkins/jobs/Jenkins Prebuild/";
+            string logDirectory = @"/Users/CI/.jenkins/jobs/Jenkins Automatic Deployment Template/";
             string logPath = System.IO.Path.Combine(logDirectory, "MyExeLogFile.txt");
             LogPath = logPath;
 
             CheckLogPathExists();
             LogBeforeBuildStarted();
 
-            string CIConfigDirectory = @"/Users/CI/.jenkins/jobs/Jenkins Prebuild/CIConfig";
+            string CIConfigDirectory = @"/Users/CI/.jenkins/jobs/Jenkins Automatic Deployment Template/CIConfig";
 
             using (StreamWriter sw = File.AppendText(logPath))
             {
@@ -109,10 +109,7 @@ namespace CI
             }
             else
             {
-                using (StreamWriter sw = File.AppendText(LogPath))
-                {
-                    sw.WriteLine(string.Format("     ERROR File Path Does not exist {0}", sourceFile));
-                }
+                LogMessage(string.Format("     ERROR File Path Does not exist {0}", sourceFile));
             }
 
             //using (var dbx = new DropboxClient("562js3vx70samgc"))
@@ -134,6 +131,14 @@ namespace CI
 
             LogAfterBuildFinished();
             return true;
+        }
+
+        private void LogMessage(string message)
+        {
+            using (StreamWriter sw = File.AppendText(LogPath))
+            {
+                sw.WriteLine(message);
+            }
         }
 
         async Task UploadToCIDropBox(DropboxClient dbx, string folder, string file, string content)
