@@ -47,7 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CIPostBuildConsoleAppBeforeBuild.cs" />
-    <Compile Include="IOSAfterBuildTask.cs" />
+    <Compile Include="CIPostBuildTask.cs" />
     <Compile Include="IOSBeforeBuildTask.cs" />
     <Compile Include="PostBuildConfigSettingsModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

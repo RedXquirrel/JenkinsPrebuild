@@ -8,14 +8,17 @@ namespace CI.Postbuild.ConsoleApp
 {
     class Program
     {
+        static CIPostBuildTask postBuild;
         static void Main(string[] args)
         {
-            CI.IOSAfterBuildTask postBuild = new IOSAfterBuildTask();
+            postBuild = new CIPostBuildTask();
 
-
+            Console.ReadLine();
         }
 
-
-
+        private async Task Run()
+        {
+            await postBuild.Run();
+        }
     }
 }

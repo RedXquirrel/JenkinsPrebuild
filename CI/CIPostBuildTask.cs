@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CI
 {
-    public class IOSAfterBuildTask
+    public class CIPostBuildTask
     {
         public string ProjectName { get; set; }
         public string LogPath { get; set; }
@@ -17,8 +17,19 @@ namespace CI
         public string IPASourceDirectory { get; set; }
         public string IPATargetDirectory { get; set; }
 
-        private async Task<bool> Run()
+        public async Task<bool> Run()
         {
+
+            string path = @"/Users/CI/.jenkins/jobs/Jenkins Prebuild/";
+            string logFile = System.IO.Path.Combine(path, "MyExeLogFile.txt");
+
+            using (StreamWriter sw = File.AppendText(logFile))
+            {
+                sw.WriteLine(string.Format("After Build Started for Project {0} at {1} UTC", ProjectName, DateTime.UtcNow.ToString()));
+            }
+
+            return true;
+
             CheckLogPathExists();
             LogBeforeBuildStarted();
 
