@@ -12,13 +12,13 @@ namespace CI.Postbuild.ConsoleApp
         static void Main(string[] args)
         {
             postBuild = new CIPostBuildTask();
-
+            Run();
             Console.ReadLine();
         }
 
-        private async Task Run()
+        private static void Run()
         {
-            await postBuild.Run();
+            postBuild.Run();
         }
     }
 }
