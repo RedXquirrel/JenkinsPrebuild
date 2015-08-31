@@ -57,21 +57,17 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
   <Target Name="AfterBuild">
   </Target>
   -->
-  <ItemGroup>
-    <MySourceFiles Include="$(MSBuildProjectDirectory)\..\CI\bin\Debug\CI.dll"/>
-  </ItemGroup>
-
+  <UsingTask AssemblyFile="$(MSBuildProjectDirectory)\..\..\CI\bin\Debug\CI.dll" TaskName="CI.CIPostBuildConsoleAppBeforeBuild" />
   <Target Name="BeforeBuild">
-    <Message Text="Starting CI.PostBuild.ConsoleApp Copy of CI.dll to project root" Importance="normal" />
-    <Copy
-        SourceFiles="@(MySourceFiles)"
-        DestinationFolder="$(MSBuildProjectDirectory)"
-        />
-    <Message Text="Finished CI.PostBuild.ConsoleApp Copy of CI.dll to project root" Importance="normal" />
+    <Message Text="Starting CI.PostBuild.ConsoleApp Before Build Task" Importance="normal" />
+    <CIPostBuildConsoleAppBeforeBuild
+      LogPath="$(MSBuildProjectDirectory)\..\..\..\CI.PostBuild.ConsoleApp.BeforeBuild.Log.txt"
+      CIDLLPath="$(MSBuildProjectDirectory)\..\CI\bin\Debug\CI.dll"
+      CIDLLDestinationPath="$(MSBuildProjectDirectory)\CI.dll"
+      />
+    <Message Text="Finishing CI.PostBuild.ConsoleApp Before Build Task" Importance="normal" />
   </Target>
 </Project>

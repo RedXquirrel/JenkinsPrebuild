@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CIPostBuildConsoleAppBeforeBuild.cs" />
     <Compile Include="IOSAfterBuildTask.cs" />
     <Compile Include="IOSBeforeBuildTask.cs" />
     <Compile Include="PostBuildConfigSettingsModel.cs" />
