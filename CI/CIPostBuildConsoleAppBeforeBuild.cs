@@ -21,6 +21,10 @@ namespace CI
         [Required]
         public string CIDLLDestinationPath { get; set; }
 
+        /// <summary>
+        /// The main purpose here is to copy a newly built CI.dll reference to the project to cater for the matter that it's project might have been updated.
+        /// </summary>
+        /// <returns></returns>
         public override bool Execute()
         {
             if (!LogBeforeBuildStart()) { LogFailedMethod("LogBeforeBuildStart()"); return false; }
@@ -29,6 +33,17 @@ namespace CI
 
             if (!CopyCIDLL()) { LogFailedMethod("CopyCIDLL()"); return false; }
 
+            if (!LogAfterBuildFinished()) { LogFailedMethod("LogAfterBuildFinished()"); return false; }
+
+            return true;
+        }
+
+        private bool LogAfterBuildFinished()
+        {
+            using (StreamWriter sw = File.AppendText(LogPath))
+            {
+                sw.WriteLine(string.Format("Before Build Finished for Project {0} at {1} UTC", ProjectName, DateTime.UtcNow.ToString()));
+            }
             return true;
         }
 
