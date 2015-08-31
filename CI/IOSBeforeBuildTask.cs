@@ -59,7 +59,7 @@ namespace CI
         {
             #region Setup Post Build variables
             if (!CreatePostBuildConfigDirectory()) { LogFailedMethod("CreatePostBuildConfigDirectory()"); return false; }
-            if (!CreatePostBuildJsonFile() { LogFailedMethod("CreatePostBuildJsonFile()"); return false; }
+            if (!CreatePostBuildJsonFile()) { LogFailedMethod("CreatePostBuildJsonFile()"); return false; }
             #endregion
 
             #region Conduct BeforeBuild
