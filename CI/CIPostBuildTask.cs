@@ -101,7 +101,7 @@ namespace CI
             {
                 System.IO.Directory.CreateDirectory(IPATargetDirectory);
             }
-            //await Task.Delay(120000);
+
             if (File.Exists(sourceFile))
             {
                 System.IO.File.Copy(sourceFile, destFile, true);
