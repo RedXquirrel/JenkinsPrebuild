@@ -60,7 +60,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <UsingTask AssemblyFile="$(MSBuildProjectDirectory)\..\..\CI\bin\Debug\CI.dll" TaskName="CI.CIPostBuildConsoleAppBeforeBuild" />
+  <UsingTask AssemblyFile="$(MSBuildProjectDirectory)\..\CI\bin\Debug\CI.dll" TaskName="CI.CIPostBuildConsoleAppBeforeBuild" />
   <Target Name="BeforeBuild">
     <Message Text="Starting CI.PostBuild.ConsoleApp Before Build Task" Importance="normal" />
     <CIPostBuildConsoleAppBeforeBuild
