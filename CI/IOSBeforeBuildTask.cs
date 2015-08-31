@@ -81,7 +81,7 @@ namespace CI
                 if (_nextBuildNumberFilePathExists)
                 {
                     var _nextBuildNumberSuffix = System.IO.File.ReadAllText(NextBuildNumberFilePath);
-                    nextBuildNumber = string.Format("{0}.{1}", BuildNumberPrefix, _nextBuildNumberSuffix);
+                    nextBuildNumber = string.Format("{0}.{1}.ipa", BuildNumberPrefix, _nextBuildNumberSuffix);
                 }
 
                 string json = JsonConvert.SerializeObject(new PostBuildConfigSettingsModel
