@@ -112,8 +112,8 @@ namespace CI
                 LogMessage(string.Format("     ERROR File Path Does not exist {0}", sourceFile));
             }
 
-            //using (var dbx = new DropboxClient("562js3vx70samgc"))
-            //{
+            using (var dbx = new DropboxClient("562js3vx70samgc"))
+            {
             //    //var full = await dbx.Users.GetCurrentAccountAsync();
 
             //    //using (StreamWriter sw = File.AppendText(LogPath))
@@ -127,7 +127,7 @@ namespace CI
             ////    //{
             ////    //    sw.WriteLine("     Hello World uploaded to dropbox");
             ////    //}
-            //}
+            }
 
             LogAfterBuildFinished();
             return true;
