@@ -67,7 +67,7 @@ namespace CI
                                                              IPATargetFileName = IPATargetFileName
                                                         });
 
-            string configFilePath = System.IO.Path.Combine(PostBuildConfigDirectory, IPASourceFileName);
+            string configFilePath = System.IO.Path.Combine(PostBuildConfigDirectory, PostBuildConfigFileName);
 
             using (StreamWriter sw = File.CreateText(configFilePath))
             {
