@@ -201,5 +201,8 @@
     <Message Text="Starting iOS After Compile Task" Importance="normal" />
     <Message Text="Finishing iOS After Compile Task" Importance="normal" />
   </Target>
-
+  <Target Name="AfterRebuild">
+    <Message Text="Starting iOS After Rebuild Task" Importance="normal" />
+    <Message Text="Finishing iOS After Rebuild Task" Importance="normal" />
+  </Target>
 </Project>
