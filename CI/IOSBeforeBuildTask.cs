@@ -57,36 +57,62 @@ namespace CI
 
         public override bool Execute()
         {
-            if (!CreatePostBuildConfigDirectory()) return false;
+            #region Setup Post Build variables
+            if (!CreatePostBuildConfigDirectory()) { LogFailedMethod("CreatePostBuildConfigDirectory()"); return false; }
+            if (!CreatePostBuildJsonFile() { LogFailedMethod("CreatePostBuildJsonFile()"); return false; }
+            #endregion
 
-            string json = JsonConvert.SerializeObject(new PostBuildConfigSettingsModel 
-                                                        { 
-                                                             IPASourceDirectory = IPASourceDirectory,
-                                                             IPASourceFileName = IPASourceFileName,
-                                                             IPATargetDirectory = IPATargetDirectory,
-                                                             IPATargetFileName = IPATargetFileName
-                                                        });
-
-            string configFilePath = System.IO.Path.Combine(PostBuildConfigDirectory, PostBuildConfigFileName);
-
-            using (StreamWriter sw = File.CreateText(configFilePath))
-            {
-                sw.WriteLine(json);
-            }
-
+            #region Conduct BeforeBuild
             if (!LogBeforeBuildStart()) { LogFailedMethod("LogBeforeBuildStart()"); return false; }
             if (!UpdateVersionNumberInInfoPlist()) { LogFailedMethod("UpdateVersionNumberInInfoPlist()"); return false; }
             if (!LogAfterBuildFinished()) { LogFailedMethod("LogAfterBuildFinished()"); return false; }
+            #endregion
+
+            return true;
+        }
+
+        private bool CreatePostBuildJsonFile()
+        {
+            try
+            {
+                string json = JsonConvert.SerializeObject(new PostBuildConfigSettingsModel
+                {
+                    ProjectName = ProjectName,
+                    IPASourceDirectory = IPASourceDirectory,
+                    IPASourceFileName = IPASourceFileName,
+                    IPATargetDirectory = IPATargetDirectory,
+                    IPATargetFileName = IPATargetFileName
+                });
+
+                string configFilePath = System.IO.Path.Combine(PostBuildConfigDirectory, PostBuildConfigFileName);
+
+                using (StreamWriter sw = File.CreateText(configFilePath))
+                {
+                    sw.WriteLine(json);
+                }
+            }
+            catch(Exception ex)
+            {
+                return false;
+            }
 
             return true;
         }
 
         private bool CreatePostBuildConfigDirectory()
         {
-            if (!System.IO.Directory.Exists(PostBuildConfigDirectory))
+            try
             {
-                System.IO.Directory.CreateDirectory(PostBuildConfigDirectory);
+                if (!System.IO.Directory.Exists(PostBuildConfigDirectory))
+                {
+                    System.IO.Directory.CreateDirectory(PostBuildConfigDirectory);
+                }
             }
+            catch(Exception ex)
+            {
+                return false;
+            }
+
             return true;
         }
 

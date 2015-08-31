@@ -8,31 +8,14 @@ using System.Threading.Tasks;
 
 namespace CI
 {
-    public class IOSAfterBuildTask : Microsoft.Build.Utilities.Task
+    public class IOSAfterBuildTask
     {
-        [Required]
         public string ProjectName { get; set; }
-
-        [Required]
         public string LogPath { get; set; }
-
-        [Required]
         public string IPASourceFileName { get; set; }
-
-        [Required]
         public string IPATargetFileName { get; set; }
-
-        [Required]
         public string IPASourceDirectory { get; set; }
-
-        [Required]
         public string IPATargetDirectory { get; set; }
-
-
-        public override bool Execute()
-        {
-            return Run().Result;
-        }
 
         private async Task<bool> Run()
         {
