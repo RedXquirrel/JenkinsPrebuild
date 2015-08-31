@@ -28,6 +28,8 @@ namespace CI
             if (!CheckCIDLLPathExists()) { LogFailedMethod("CheckCIDLLPathExists()"); return false; }
 
             if (!CopyCIDLL()) { LogFailedMethod("CopyCIDLL()"); return false; }
+
+            return true;
         }
 
         private bool CopyCIDLL()
