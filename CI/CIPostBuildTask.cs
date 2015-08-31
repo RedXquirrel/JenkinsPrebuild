@@ -124,12 +124,12 @@ namespace CI
                     sw.WriteLine(string.Format("     DropBox User DropBox Client Created for {0} - {1}", full.Name.DisplayName, full.Email));
                 }
 
-                await UploadToCIDropBox(dbx, "test", "test.txt", "Hello Dropbox");
+                //await UploadToCIDropBox(dbx, "test", "test.txt", "Hello Dropbox");
 
-                using (StreamWriter sw = File.AppendText(LogPath))
-                {
-                    sw.WriteLine("     Hello World uploaded to dropbox");
-                }
+                //using (StreamWriter sw = File.AppendText(LogPath))
+                //{
+                //    sw.WriteLine("     Hello World uploaded to dropbox");
+                //}
             }
 
             LogAfterBuildFinished();
