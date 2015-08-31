@@ -175,20 +175,7 @@
   <UsingTask AssemblyFile="$(MSBuildProjectDirectory)\..\..\CI\bin\Debug\CI.dll" TaskName="CI.IOSBeforeBuildTask" />
   <Target Name="BeforeBuild">
     <Message Text="Starting iOS Before Build Task" Importance="normal" />
-    <IOSBeforeBuildTask
-      BuildNumberPrefix="0.0" 
-      NextBuildNumberFilePath="$(MSBuildProjectDirectory)\..\..\..\nextBuildNumber"  
-      LogPath="$(MSBuildProjectDirectory)\..\..\..\ClientAppToBuild.iOS.BeforeBuild.Log.txt" 
-      ProjectName="$(MSBuildProjectFile)" 
-      InfoPlistPath="$(MSBuildProjectDirectory)\info.plist"
-
-      PostBuildConfigFileName="CIPostBuildConfig.Json"
-      PostBuildConfigDirectory="$(MSBuildProjectDirectory)\..\..\..\CIConfig\"
-      IPASourceFileName="JenkinsPreBuild.ipa"
-      IPATargetFileName="JenkinsPreBuild.{0}.ipa"
-      IPASourceDirectory="$(MSBuildProjectDirectory)\bin\iPhone\Release\"
-      IPATargetDirectory="$(MSBuildProjectDirectory)\..\..\..\IPAArchives\"
-      />
+    <IOSBeforeBuildTask BuildNumberPrefix="0.0" NextBuildNumberFilePath="$(MSBuildProjectDirectory)\..\..\..\nextBuildNumber" LogPath="$(MSBuildProjectDirectory)\..\..\..\ClientAppToBuild.iOS.BeforeBuild.Log.txt" ProjectName="$(MSBuildProjectFile)" InfoPlistPath="$(MSBuildProjectDirectory)\info.plist" PostBuildConfigFileName="CIPostBuildConfig.Json" PostBuildConfigDirectory="$(MSBuildProjectDirectory)\..\..\..\CIConfig\" IPASourceFileName="JenkinsPreBuild.ipa" IPATargetFileName="JenkinsPreBuild.{0}.ipa" IPASourceDirectory="$(MSBuildProjectDirectory)\bin\iPhone\Release\" IPATargetDirectory="$(MSBuildProjectDirectory)\..\..\..\IPAArchives\" />
     <Message Text="Finishing iOS Before Build Task" Importance="normal" />
   </Target>
   <Target Name="AfterCompile">
