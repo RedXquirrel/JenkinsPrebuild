@@ -1,4 +1,6 @@
-﻿using Microsoft.Build.Framework;
+﻿using Dropbox.Api;
+using Dropbox.Api.Files;
+using Microsoft.Build.Framework;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -113,8 +115,41 @@ namespace CI
                 }
             }
 
+            using (var dbx = new DropboxClient("562js3vx70samgc"))
+            {
+                var full = await dbx.Users.GetCurrentAccountAsync();
+                
+                using (StreamWriter sw = File.AppendText(LogPath))
+                {
+                    sw.WriteLine(string.Format("     DropBox User DropBox Client Created for {0} - {1}", full.Name.DisplayName, full.Email));
+                }
+
+                await UploadToCIDropBox(dbx, "test", "test.txt", "Hello Dropbox");
+
+                using (StreamWriter sw = File.AppendText(LogPath))
+                {
+                    sw.WriteLine("     Hello World uploaded to dropbox");
+                }
+            }
+
             LogAfterBuildFinished();
             return true;
+        }
+
+        async Task UploadToCIDropBox(DropboxClient dbx, string folder, string file, string content)
+        {
+            using (var mem = new MemoryStream(Encoding.UTF8.GetBytes(content)))
+            {
+                var updated = await dbx.Files.UploadAsync(
+                    folder + "/" + file,
+                    WriteMode.Overwrite.Instance,
+                    body: mem);
+                Console.WriteLine("Saved {0}/{1} rev {2}", folder, file, updated.Rev);
+                using (StreamWriter sw = File.AppendText(LogPath))
+                {
+                    sw.WriteLine(string.Format("     DropBox Saved {0}/{1} rev {2}", folder, file, updated.Rev));
+                }
+            }
         }
 
         private void LogAfterBuildFinished()
