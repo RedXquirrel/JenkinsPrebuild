@@ -126,19 +126,28 @@ namespace CI
             using (var dbx = new DropboxClient("562js3vx70samgc"))
             {
                 LogMessage("     :     Entered using new DropbBoxClient() phase");
-                var full = await dbx.Users.GetCurrentAccountAsync();
-                LogMessage("     :     Awaited dbx.Users.GetCurrentAccountAsync()");
-                LogMessage(string.Format("     DropBox User DropBox Client Created for {0} - {1}", full.Name.DisplayName, full.Email));
-
+                try
+                {
+                    var full = await dbx.Users.GetCurrentAccountAsync();
+                    LogMessage("     :     Awaited dbx.Users.GetCurrentAccountAsync()");
+                    LogMessage(string.Format("     DropBox User DropBox Client Created for {0} - {1}", full.Name.DisplayName, full.Email));
+                }
+                catch(Exception ex)
+                {
+                    LogMessage(string.Format("     :     ERROR: {0}", ex.Message));
+                }
             ////    //await UploadToCIDropBox(dbx, "test", "test.txt", "Hello Dropbox");
 
             ////    //using (StreamWriter sw = File.AppendText(LogPath))
             ////    //{
             ////    //    sw.WriteLine("     Hello World uploaded to dropbox");
             ////    //}
+                LogMessage("     :     Exiting using new DropbBoxClient() phase");
             }
+            LogMessage("     :     Exited using new DropbBoxClient() phase");
 
             LogAfterBuildFinished();
+
             return true;
         }
 
