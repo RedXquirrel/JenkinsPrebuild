@@ -214,7 +214,7 @@ async Task UploadToDropBox(DropboxClient dbx, string dropboxfolder, string dropb
             var updated = await dbx.Files.UploadAsync(
                 dropboxfolder + "/" + dropboxfilename,
                 WriteMode.Overwrite.Instance,
-                body: memStream);
+                body: fileStream);
         }
         catch (Exception ex)
         {
