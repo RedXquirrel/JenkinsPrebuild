@@ -136,7 +136,8 @@ namespace CI
                 {
                     LogMessage(string.Format("     :     ERROR: {0}", ex.Message));
                 }
-                await UploadToDropBox(dbx, "/test", IPATargetFileName, "Hello Dropbox");
+                //await UploadToDropBox(dbx, "/test", IPATargetFileName, "Hello Dropbox");
+                await UploadToDropBox(dbx, "/test", IPATargetFileName, destFile);
 
                 LogMessage("     :     Exiting using new DropbBoxClient() phase");
             }
@@ -155,7 +156,7 @@ namespace CI
             }
         }
 
-        async Task UploadToDropBox(DropboxClient dbx, string folder, string file, string content)
+        async Task UploadTextToDropBox(DropboxClient dbx, string folder, string filename, string content)
         {
             LogMessage("     :     In UploadToDropBox(...)");
             using (var mem = new MemoryStream(Encoding.UTF8.GetBytes(content)))
@@ -164,7 +165,7 @@ namespace CI
                 try
                 {
                     var updated = await dbx.Files.UploadAsync(
-                        folder + "/" + file,
+                        folder + "/" + filename,
                         WriteMode.Overwrite.Instance,
                         body: mem);
                 }
@@ -174,6 +175,34 @@ namespace CI
                 }
                 LogMessage("     :     Processed var updated = await dbx.Files.UploadAsync(...)");
                 LogMessage("     :     Exiting  using (var mem = new MemoryStream(Encoding.UTF8.GetBytes(content)))");
+            }
+            LogMessage("     :     Exiting UploadToDropBox(...)");
+        }
+
+        async Task UploadToDropBox(DropboxClient dbx, string dropboxfolder, string dropboxfilename, string filepathtoUpload)
+        {
+            LogMessage("     :     In UploadToDropBox(...)");
+            LogMessage(string.Format("     :          DropBox folder {0}", dropboxfolder));
+            LogMessage(string.Format("     :          DropBox filename {0}", dropboxfilename));
+            LogMessage(string.Format("     :          File to Upload {0}", filepathtoUpload));
+
+            using (FileStream fileStream = File.OpenRead(filepathtoUpload))
+            {
+                MemoryStream memStream = new MemoryStream();
+                memStream.SetLength(fileStream.Length);
+                fileStream.Read(memStream.GetBuffer(), 0, (int)fileStream.Length);
+
+                try
+                {
+                    var updated = await dbx.Files.UploadAsync(
+                        dropboxfolder + "/" + dropboxfilename,
+                        WriteMode.Overwrite.Instance,
+                        body: memStream);
+                }
+                catch (Exception ex)
+                {
+                    LogMessage(string.Format("     :     ERROR: {0}", ex.Message));
+                }
             }
             LogMessage("     :     Exiting UploadToDropBox(...)");
         }
