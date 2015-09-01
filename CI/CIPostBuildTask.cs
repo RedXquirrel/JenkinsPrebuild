@@ -197,11 +197,12 @@ namespace CI
                     var updated = await dbx.Files.UploadAsync(
                         dropboxfolder + "/" + dropboxfilename,
                         WriteMode.Overwrite.Instance,
-                        body: memStream);
+                        body: fileStream);
                 }
                 catch (Exception ex)
                 {
                     LogMessage(string.Format("     :     ERROR: {0}", ex.Message));
+                    throw new Exception(ex.Message);
                 }
             }
             LogMessage("     :     Exiting UploadToDropBox(...)");
