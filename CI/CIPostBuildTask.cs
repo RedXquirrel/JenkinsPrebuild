@@ -125,8 +125,9 @@ namespace CI
 
             using (var dbx = new DropboxClient("562js3vx70samgc"))
             {
-                LogMessage("     :     Entered using new DropbBoxClient() phase.");
+                LogMessage("     :     Entered using new DropbBoxClient() phase");
                 var full = await dbx.Users.GetCurrentAccountAsync();
+                LogMessage("     :     Awaited dbx.Users.GetCurrentAccountAsync()");
                 LogMessage(string.Format("     DropBox User DropBox Client Created for {0} - {1}", full.Name.DisplayName, full.Email));
 
             ////    //await UploadToCIDropBox(dbx, "test", "test.txt", "Hello Dropbox");
