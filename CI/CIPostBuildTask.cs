@@ -93,9 +93,13 @@ namespace CI
 
             using (StreamWriter sw = File.AppendText(LogPath))
             {
-                sw.WriteLine(string.Format("     IPA Target Filename {0}", IPATargetFileName));
-                sw.WriteLine(string.Format("     IPA Target Directory {0}", IPATargetDirectory));
-                sw.WriteLine(string.Format("     IPA Target Path {0}", destFile));
+                LogMessage(string.Format("     IPA Target Filename {0}", IPATargetFileName));
+                LogMessage(string.Format("     IPA Target Directory {0}", IPATargetDirectory));
+                LogMessage(string.Format("     IPA Target Path {0}", destFile));
+
+                //sw.WriteLine(string.Format("     IPA Target Filename {0}", IPATargetFileName));
+                //sw.WriteLine(string.Format("     IPA Target Directory {0}", IPATargetDirectory));
+                //sw.WriteLine(string.Format("     IPA Target Path {0}", destFile));
             }
 
             if (!System.IO.Directory.Exists(IPATargetDirectory))
@@ -111,6 +115,8 @@ namespace CI
             {
                 LogMessage(string.Format("     ERROR File Path Does not exist {0}", sourceFile));
             }
+
+            LogMessage("     COMMENCING DROPBOX UPLOAD SEQUENCE");
 
             using (var dbx = new DropboxClient("562js3vx70samgc"))
             {
