@@ -130,13 +130,13 @@ namespace CI
                 {
                     var full = await dbx.Users.GetCurrentAccountAsync();
                     LogMessage("     :     Awaited dbx.Users.GetCurrentAccountAsync()");
-                    LogMessage(string.Format("     DropBox User DropBox Client Created for {0} - {1}", full.Name.DisplayName, full.Email));
+                    LogMessage(string.Format("     :     DropBox User DropBox Client Created for {0} - {1}", full.Name.DisplayName, full.Email));
                 }
                 catch (Exception ex)
                 {
                     LogMessage(string.Format("     :     ERROR: {0}", ex.Message));
                 }
-                await UploadToDropBox(dbx, "test", "test.txt", "Hello Dropbox");
+                await UploadToDropBox(dbx, "/test", "test.txt", "Hello Dropbox");
 
                 LogMessage("     :     Exiting using new DropbBoxClient() phase");
             }
