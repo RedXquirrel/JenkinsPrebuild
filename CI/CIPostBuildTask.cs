@@ -179,7 +179,7 @@ async Task UploadToDropBox(DropboxClient dbxbak, string dropboxfolder, string dr
             catch (Exception ex)
             {
                 LogMessage(string.Format("     :     ERROR: {0}", ex.Message));
-                throw new Exception(ex.Message);
+                throw;
             }
         }
     }
