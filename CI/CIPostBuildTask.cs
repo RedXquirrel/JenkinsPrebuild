@@ -136,7 +136,6 @@ namespace CI
                 {
                     LogMessage(string.Format("     :     ERROR: {0}", ex.Message));
                 }
-                //await UploadToDropBox(dbx, "/test", IPATargetFileName, "Hello Dropbox");
                 await UploadToDropBox(dbx, "/test", IPATargetFileName, destFile);
 
                 LogMessage("     :     Exiting using new DropbBoxClient() phase");
@@ -183,28 +182,26 @@ namespace CI
         {
             LogMessage("     :     In UploadToDropBox(...)");
             LogMessage(string.Format("     :          DropBox folder {0}", dropboxfolder));
-            LogMessage(string.Format("     :          DropBox filename {0}", dropboxfilename));
+            LogMessage(string.Format("     :          DropBox filename {0}", dropboxfolder));
             LogMessage(string.Format("     :          File to Upload {0}", filepathtoUpload));
 
-            using (FileStream fileStream = File.OpenRead(filepathtoUpload))
+            using (var mem = new MemoryStream(File.ReadAllBytes(filepathtoUpload)))
             {
-                MemoryStream memStream = new MemoryStream();
-                memStream.SetLength(fileStream.Length);
-                fileStream.Read(memStream.GetBuffer(), 0, (int)fileStream.Length);
-
+                LogMessage("     :               In using (var mem = new MemoryStream(Encoding.UTF8.GetBytes(content)))");
                 try
                 {
                     var updated = await dbx.Files.UploadAsync(
                         dropboxfolder + "/" + dropboxfilename,
                         WriteMode.Overwrite.Instance,
-                        body: fileStream);
+                        body: mem);
                 }
                 catch (Exception ex)
                 {
                     LogMessage(string.Format("     :     ERROR: {0}", ex.Message));
-                    throw new Exception(ex.Message);
                 }
+                LogMessage("     :               Exiting using (var mem = new MemoryStream(Encoding.UTF8.GetBytes(content)))");
             }
+
             LogMessage("     :     Exiting UploadToDropBox(...)");
         }
 
