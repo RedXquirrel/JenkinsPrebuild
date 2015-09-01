@@ -185,22 +185,42 @@ async Task UploadToDropBox(DropboxClient dbx, string dropboxfolder, string dropb
     LogMessage(string.Format("     :          DropBox filename {0}", dropboxfolder));
     LogMessage(string.Format("     :          File to Upload {0}", filepathtoUpload));
 
-    using (var mem = new MemoryStream(File.ReadAllBytes(filepathtoUpload)))
+    //using (var mem = new MemoryStream(File.ReadAllBytes(filepathtoUpload)))
+    //{
+    //    LogMessage("     :               In using (var mem = new MemoryStream(Encoding.UTF8.GetBytes(content)))");
+    //    try
+    //    {
+    //        var updated = await dbx.Files.UploadAsync(
+    //            dropboxfolder + "/" + dropboxfilename,
+    //            WriteMode.Overwrite.Instance,
+    //            body: mem);
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        LogMessage(string.Format("     :     ERROR: {0}", ex.Message));
+    //        throw new Exception(ex.Message);
+    //    }
+    //    LogMessage("     :               Exiting using (var mem = new MemoryStream(Encoding.UTF8.GetBytes(content)))");
+    //}
+
+    using (FileStream fileStream = File.OpenRead(filepathtoUpload))
     {
-        LogMessage("     :               In using (var mem = new MemoryStream(Encoding.UTF8.GetBytes(content)))");
+        MemoryStream memStream = new MemoryStream();
+        memStream.SetLength(fileStream.Length);
+        fileStream.Read(memStream.GetBuffer(), 0, (int)fileStream.Length);
+
         try
         {
             var updated = await dbx.Files.UploadAsync(
                 dropboxfolder + "/" + dropboxfilename,
                 WriteMode.Overwrite.Instance,
-                body: mem);
+                body: memStream);
         }
         catch (Exception ex)
         {
             LogMessage(string.Format("     :     ERROR: {0}", ex.Message));
             throw new Exception(ex.Message);
         }
-        LogMessage("     :               Exiting using (var mem = new MemoryStream(Encoding.UTF8.GetBytes(content)))");
     }
 
     LogMessage("     :     Exiting UploadToDropBox(...)");
