@@ -203,18 +203,35 @@ async Task UploadToDropBox(DropboxClient dbx, string dropboxfolder, string dropb
     //    LogMessage("     :               Exiting using (var mem = new MemoryStream(Encoding.UTF8.GetBytes(content)))");
     //}
 
-    using (FileStream fileStream = File.OpenRead(filepathtoUpload))
-    {
-        MemoryStream memStream = new MemoryStream();
-        memStream.SetLength(fileStream.Length);
-        fileStream.Read(memStream.GetBuffer(), 0, (int)fileStream.Length);
+    //using (FileStream fileStream = File.OpenRead(filepathtoUpload))
+    //{
+    //    MemoryStream memStream = new MemoryStream();
+    //    memStream.SetLength(fileStream.Length);
+    //    fileStream.Read(memStream.GetBuffer(), 0, (int)fileStream.Length);
 
+    //    try
+    //    {
+    //        var updated = await dbx.Files.UploadAsync(
+    //            dropboxfolder + "/" + dropboxfilename,
+    //            WriteMode.Overwrite.Instance,
+    //            body: fileStream);
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        LogMessage(string.Format("     :     ERROR: {0}", ex.Message));
+    //        throw new Exception(ex.Message);
+    //    }
+    //}
+
+    using (FileStream fsSource = new FileStream(filepathtoUpload,
+    FileMode.Open, FileAccess.Read))
+    {
         try
         {
             var updated = await dbx.Files.UploadAsync(
                 dropboxfolder + "/" + dropboxfilename,
                 WriteMode.Overwrite.Instance,
-                body: fileStream);
+                body: fsSource);
         }
         catch (Exception ex)
         {
