@@ -34,31 +34,20 @@ namespace CI
 
             string CIConfigDirectory = @"/Users/CI/.jenkins/jobs/Jenkins Automatic Deployment Template/CIConfig";
 
-            using (StreamWriter sw = File.AppendText(logPath))
-            {
-                sw.WriteLine(string.Format("     Configuration Directory: {0}", CIConfigDirectory));
-            }
+            LogMessage(string.Format("     Configuration Directory: {0}", CIConfigDirectory));
 
             string CIConfigJsonFileName = @"CIPostBuildConfig.json";
 
-            using (StreamWriter sw = File.AppendText(logPath))
-            {
-                sw.WriteLine(string.Format("     Configuration File Name: {0}", CIConfigJsonFileName));
-            }
+            LogMessage(string.Format("     Configuration File Name: {0}", CIConfigJsonFileName));
+
 
             string CIConfigJsonFilePath = Path.Combine(CIConfigDirectory, CIConfigJsonFileName);
 
-            using (StreamWriter sw = File.AppendText(logPath))
-            {
-                sw.WriteLine(string.Format("     Configuration File Path: {0}", CIConfigJsonFilePath));
-            }
+            LogMessage(string.Format("     Configuration File Path: {0}", CIConfigJsonFilePath));
 
             string configjson = File.ReadAllText(CIConfigJsonFilePath);
 
-            using (StreamWriter sw = File.AppendText(logPath))
-            {
-                sw.WriteLine(string.Format("     Configuration JSON: {0}", configjson));
-            }
+            LogMessage(string.Format("     Configuration JSON: {0}", configjson));
 
             _config = JsonConvert.DeserializeObject<PostBuildConfigSettingsModel>(configjson);
 
@@ -72,12 +61,9 @@ namespace CI
 
             string sourceFile = System.IO.Path.Combine(IPASourceDirectory, IPASourceFileName);
 
-            using (StreamWriter sw = File.AppendText(LogPath))
-            {
-                sw.WriteLine(string.Format("     IPA Source Filename {0}", IPASourceFileName));
-                sw.WriteLine(string.Format("     IPA Source Directory {0}", IPASourceDirectory));
-                sw.WriteLine(string.Format("     IPA Source Path {0}", sourceFile));
-            }
+            LogMessage(string.Format("     IPA Source Filename {0}", IPASourceFileName));
+            LogMessage(string.Format("     IPA Source Directory {0}", IPASourceDirectory));
+            LogMessage(string.Format("     IPA Source Path {0}", sourceFile));
 
             string destFile = string.Empty;
             if (IPATargetFileName.Contains("{0}"))
@@ -91,16 +77,9 @@ namespace CI
                 destFile = System.IO.Path.Combine(IPATargetDirectory, IPATargetFileName);
             }
 
-            using (StreamWriter sw = File.AppendText(LogPath))
-            {
-                //LogMessage(string.Format("     IPA Target Filename {0}", IPATargetFileName));
-                //LogMessage(string.Format("     IPA Target Directory {0}", IPATargetDirectory));
-                //LogMessage(string.Format("     IPA Target Path {0}", destFile));
-
-                sw.WriteLine(string.Format("     IPA Target Filename {0}", IPATargetFileName));
-                sw.WriteLine(string.Format("     IPA Target Directory {0}", IPATargetDirectory));
-                sw.WriteLine(string.Format("     IPA Target Path {0}", destFile));
-            }
+            LogMessage(string.Format("     IPA Target Filename {0}", IPATargetFileName));
+            LogMessage(string.Format("     IPA Target Directory {0}", IPATargetDirectory));
+            LogMessage(string.Format("     IPA Target Path {0}", destFile));
 
             if (!System.IO.Directory.Exists(IPATargetDirectory))
             {
@@ -116,10 +95,7 @@ namespace CI
                 LogMessage(string.Format("     ERROR File Path Does not exist {0}", sourceFile));
             }
 
-            using (StreamWriter sw = File.AppendText(LogPath))
-            {
-                sw.WriteLine(string.Format("     Copied {0} to IPAArchives Directory", IPATargetFileName));
-            }
+            LogMessage(string.Format("     Copied {0} to IPAArchives Directory", IPATargetFileName));
 
             LogMessage("     COMMENCING DROPBOX UPLOAD SEQUENCE");
 
@@ -265,10 +241,7 @@ async Task UploadToDropBox(DropboxClient dbxbak, string dropboxfolder, string dr
         {
             if (!File.Exists(LogPath))
             {
-                using (StreamWriter sw = File.CreateText(LogPath))
-                {
-                    sw.WriteLine(string.Format("Build Server Log File Created: {0} UTC", DateTime.UtcNow.ToString()));
-                }
+               LogMessage(string.Format("Build Server Log File Created: {0} UTC", DateTime.UtcNow.ToString()));
             }
         }
     }
