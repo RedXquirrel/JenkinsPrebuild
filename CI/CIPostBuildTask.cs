@@ -112,7 +112,10 @@ namespace CI
                 {
                     LogMessage(string.Format("     :     ERROR: {0}", ex.Message));
                 }
-                await UploadToDropBox(dbx, "/test", IPATargetFileName, destFile);
+
+                // CIConfigDirectory
+                // await UploadToDropBox(dbx, "/test", IPATargetFileName, destFile);
+                await UploadToDropBox(dbx, "/test", IPATargetFileName, CIConfigDirectory + "/test.zip");
 
                 LogMessage("     :     Exiting using new DropbBoxClient() phase");
             }
