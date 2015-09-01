@@ -136,7 +136,7 @@ namespace CI
                 {
                     LogMessage(string.Format("     :     ERROR: {0}", ex.Message));
                 }
-                await UploadToDropBox(dbx, "/test", "test.txt", "Hello Dropbox");
+                await UploadToDropBox(dbx, "/test", IPATargetFileName, "Hello Dropbox");
 
                 LogMessage("     :     Exiting using new DropbBoxClient() phase");
             }
