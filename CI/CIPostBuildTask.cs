@@ -165,12 +165,18 @@ namespace CI
             using (var mem = new MemoryStream(Encoding.UTF8.GetBytes(content)))
             {
                 LogMessage("     :     In using (var mem = new MemoryStream(Encoding.UTF8.GetBytes(content)))");
-                var updated = await dbx.Files.UploadAsync(
-                    folder + "/" + file,
-                    WriteMode.Overwrite.Instance,
-                    body: mem);
+                try
+                {
+                    var updated = await dbx.Files.UploadAsync(
+                        folder + "/" + file,
+                        WriteMode.Overwrite.Instance,
+                        body: mem);
+                }
+                catch(Exception ex)
+                {
+                    LogMessage(string.Format("     :     ERROR: {0}", ex.Message));
+                }
                 LogMessage("     :     Processed var updated = await dbx.Files.UploadAsync(...)");
-                //Console.WriteLine("Saved {0}/{1} rev {2}", folder, file, updated.Rev);
                 LogMessage("     :     Exiting  using (var mem = new MemoryStream(Encoding.UTF8.GetBytes(content)))");
             }
             LogMessage("     :     Exiting UploadToDropBox(...)");
