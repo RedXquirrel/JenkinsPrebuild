@@ -123,7 +123,7 @@ namespace CI
 
             LogMessage("     COMMENCING DROPBOX UPLOAD SEQUENCE");
 
-            using (var dbx = new DropboxClient("562js3vx70samgc"))
+            using (var dbx = new DropboxClient("NYDBfyWzefAAAAAAAAAABqwodGdUMmmYVDuixOQaIOOXj3KejN36z1EOtgC5iy8O"))
             {
                 LogMessage("     :     Entered using new DropbBoxClient() phase");
                 try
