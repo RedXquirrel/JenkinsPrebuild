@@ -178,7 +178,7 @@ namespace CI
             LogMessage("     :     Exiting UploadToDropBox(...)");
         }
 
-async Task UploadToDropBox(DropboxClient dbx, string dropboxfolder, string dropboxfilename, string filepathtoUpload)
+async Task UploadToDropBox(DropboxClient dbxbak, string dropboxfolder, string dropboxfilename, string filepathtoUpload)
 {
     LogMessage("     :     In UploadToDropBox(...)");
     LogMessage(string.Format("     :          DropBox folder {0}", dropboxfolder));
@@ -222,21 +222,23 @@ async Task UploadToDropBox(DropboxClient dbx, string dropboxfolder, string dropb
     //        throw new Exception(ex.Message);
     //    }
     //}
-
-    using (FileStream fsSource = new FileStream(filepathtoUpload,
-    FileMode.Open, FileAccess.Read))
+    using (var dbx = new DropboxClient("NYDBfyWzefAAAAAAAAAABqwodGdUMmmYVDuixOQaIOOXj3KejN36z1EOtgC5iy8O"))
     {
-        try
+        using (FileStream fsSource = new FileStream(filepathtoUpload,
+        FileMode.Open, FileAccess.Read))
         {
-            var updated = await dbx.Files.UploadAsync(
-                dropboxfolder + "/" + dropboxfilename,
-                WriteMode.Overwrite.Instance,
-                body: fsSource);
-        }
-        catch (Exception ex)
-        {
-            LogMessage(string.Format("     :     ERROR: {0}", ex.Message));
-            throw new Exception(ex.Message);
+            try
+            {
+                var updated = await dbx.Files.UploadAsync(
+                    dropboxfolder + "/" + dropboxfilename,
+                    WriteMode.Overwrite.Instance,
+                    body: fsSource);
+            }
+            catch (Exception ex)
+            {
+                LogMessage(string.Format("     :     ERROR: {0}", ex.Message));
+                throw new Exception(ex.Message);
+            }
         }
     }
 
