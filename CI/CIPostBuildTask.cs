@@ -136,7 +136,7 @@ namespace CI
                 //{
                 //    LogMessage(string.Format("     :     ERROR: {0}", ex.Message));
                 //}
-                await UploadToCIDropBox(dbx, "test", "test.txt", "Hello Dropbox");
+                await UploadToDropBox(dbx, "test", "test.txt", "Hello Dropbox");
 
             ////    //using (StreamWriter sw = File.AppendText(LogPath))
             ////    //{
@@ -159,20 +159,21 @@ namespace CI
             }
         }
 
-        async Task UploadToCIDropBox(DropboxClient dbx, string folder, string file, string content)
+        async Task UploadToDropBox(DropboxClient dbx, string folder, string file, string content)
         {
+            LogMessage("     :     In UploadToDropBox(...)");
             using (var mem = new MemoryStream(Encoding.UTF8.GetBytes(content)))
             {
+                LogMessage("     :     In using (var mem = new MemoryStream(Encoding.UTF8.GetBytes(content)))");
                 var updated = await dbx.Files.UploadAsync(
                     folder + "/" + file,
                     WriteMode.Overwrite.Instance,
                     body: mem);
-                Console.WriteLine("Saved {0}/{1} rev {2}", folder, file, updated.Rev);
-                using (StreamWriter sw = File.AppendText(LogPath))
-                {
-                    sw.WriteLine(string.Format("     DropBox Saved {0}/{1} rev {2}", folder, file, updated.Rev));
-                }
+                LogMessage("     :     Processed var updated = await dbx.Files.UploadAsync(...)");
+                //Console.WriteLine("Saved {0}/{1} rev {2}", folder, file, updated.Rev);
+                LogMessage("     :     Exiting  using (var mem = new MemoryStream(Encoding.UTF8.GetBytes(content)))");
             }
+            LogMessage("     :     Exiting UploadToDropBox(...)");
         }
 
         private void LogAfterBuildFinished()
