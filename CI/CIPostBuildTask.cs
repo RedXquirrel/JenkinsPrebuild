@@ -161,24 +161,24 @@ namespace CI
 
         async Task UploadToDropBox(DropboxClient dbx, string folder, string file, string content)
         {
-LogMessage("     :     In UploadToDropBox(...)");
-using (var mem = new MemoryStream(Encoding.UTF8.GetBytes(content)))
-{
-    LogMessage("     :     In using (var mem = new MemoryStream(Encoding.UTF8.GetBytes(content)))");
-    try
-    {
-        var updated = await dbx.Files.UploadAsync(
-            folder + "/" + file,
-            WriteMode.Overwrite.Instance,
-            body: mem);
-    }
-    catch(Exception ex)
-    {
-        LogMessage(string.Format("     :     ERROR: {0}", ex.Message));
-    }
-    LogMessage("     :     Processed var updated = await dbx.Files.UploadAsync(...)");
-    LogMessage("     :     Exiting  using (var mem = new MemoryStream(Encoding.UTF8.GetBytes(content)))");
-}
+            LogMessage("     :     In UploadToDropBox(...)");
+            using (var mem = new MemoryStream(Encoding.UTF8.GetBytes(content)))
+            {
+                LogMessage("     :     In using (var mem = new MemoryStream(Encoding.UTF8.GetBytes(content)))");
+                try
+                {
+                    var updated = await dbx.Files.UploadAsync(
+                        folder + "/" + file,
+                        WriteMode.Overwrite.Instance,
+                        body: mem);
+                }
+                catch(Exception ex)
+                {
+                    LogMessage(string.Format("     :     ERROR: {0}", ex.Message));
+                }
+                LogMessage("     :     Processed var updated = await dbx.Files.UploadAsync(...)");
+                LogMessage("     :     Exiting  using (var mem = new MemoryStream(Encoding.UTF8.GetBytes(content)))");
+            }
             LogMessage("     :     Exiting UploadToDropBox(...)");
         }
 
