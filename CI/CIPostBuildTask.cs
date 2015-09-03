@@ -1,4 +1,5 @@
-﻿using Dropbox.Api;
+﻿using Com.Xamtastic.Patterns.CI.DropboxCI;
+using Dropbox.Api;
 using Dropbox.Api.Files;
 using Microsoft.Build.Framework;
 using Newtonsoft.Json;
@@ -157,35 +158,46 @@ using (var dbx = new DropboxClient("NYDBfyWzefAAAAAAAAAABqwodGdUMmmYVDuixOQaIOOX
             LogMessage("     :     Exiting UploadToDropBox(...)");
         }
 
-async Task UploadToDropBox(DropboxClient dbxbak, string dropboxfolder, string dropboxfilename, string filepathtoUpload)
-{
-    LogMessage("     :     In UploadToDropBox(...)");
-    LogMessage(string.Format("     :          DropBox folder {0}", dropboxfolder));
-    LogMessage(string.Format("     :          DropBox filename {0}", dropboxfolder));
-    LogMessage(string.Format("     :          File to Upload {0}", filepathtoUpload));
-
-    using (var dbx = new DropboxClient("NYDBfyWzefAAAAAAAAAABqwodGdUMmmYVDuixOQaIOOXj3KejN36z1EOtgC5iy8O"))
-    {
-        using (FileStream fsSource = new FileStream(filepathtoUpload,
-        FileMode.Open, FileAccess.Read))
+        async Task UploadToDropBox(DropboxClient dbxbak, string dropboxfolder, string dropboxfilename, string filepathtoUpload)
         {
-            try
-            {
-                var updated = await dbx.Files.UploadAsync(
-                    dropboxfolder + "/" + dropboxfilename,
-                    WriteMode.Overwrite.Instance,
-                    body: fsSource);
-            }
-            catch (Exception ex)
-            {
-                LogMessage(string.Format("     :     ERROR: {0}", ex.Message));
-                throw;
-            }
-        }
-    }
+            LogMessage("     :     In UploadToDropBox(...)");
+            LogMessage(string.Format("     :          DropBox folder {0}", dropboxfolder));
+            LogMessage(string.Format("     :          DropBox filename {0}", dropboxfolder));
+            LogMessage(string.Format("     :          File to Upload {0}", filepathtoUpload));
 
-    LogMessage("     :     Exiting UploadToDropBox(...)");
-}
+            var dc = new DropboxCIClient("NYDBfyWzefAAAAAAAAAABqwodGdUMmmYVDuixOQaIOOXj3KejN36z1EOtgC5iy8O");
+            dc.LogMessageAction = (message) =>
+                {
+                    LogMessage(string.Format("     :          {0}", message));
+                };
+            dc.LogErrorAction = (message) =>
+                {
+                    throw new Exception(message);
+                };
+            await dc.Upload(filepathtoUpload, dropboxfolder + "/" + dropboxfilename);
+
+            //using (var dbx = new DropboxClient("NYDBfyWzefAAAAAAAAAABqwodGdUMmmYVDuixOQaIOOXj3KejN36z1EOtgC5iy8O"))
+            //{
+            //    using (FileStream fsSource = new FileStream(filepathtoUpload,
+            //    FileMode.Open, FileAccess.Read))
+            //    {
+            //        try
+            //        {
+            //            var updated = await dbx.Files.UploadAsync(
+            //                dropboxfolder + "/" + dropboxfilename,
+            //                WriteMode.Overwrite.Instance,
+            //                body: fsSource);
+            //        }
+            //        catch (Exception ex)
+            //        {
+            //            LogMessage(string.Format("     :     ERROR: {0}", ex.Message));
+            //            throw;
+            //        }
+            //    }
+            //}
+
+            LogMessage("     :     Exiting UploadToDropBox(...)");
+        }
 
         private void LogAfterBuildFinished()
         {
