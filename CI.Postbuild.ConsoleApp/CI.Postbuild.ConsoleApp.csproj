@@ -89,6 +89,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bin\Debug\CI.dll" />
+    <Content Include="bin\Debug\CI.Postbuild.ConsoleApp.exe" />
     <Content Include="bin\Release\CI.dll" />
     <Content Include="bin\Release\CI.Postbuild.ConsoleApp.exe" />
     <Content Include="bin\Release\CI.Postbuild.ConsoleApp.pdb" />
