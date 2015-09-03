@@ -36,6 +36,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>.\CI.dll</HintPath>
     </Reference>
+    <Reference Include="Com.Xamtastic.Patterns.CI.Dropbox, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\Com.Xamtastic.Patterns.CI.Dropbox.dll</HintPath>
+    </Reference>
     <Reference Include="Dropbox.Api, Version=0.1.5694.33664, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Dropbox.Api.1.1.0-beta\lib\portable-net45+sl50+win+wpa81+wp80\Dropbox.Api.dll</HintPath>
       <Private>True</Private>
