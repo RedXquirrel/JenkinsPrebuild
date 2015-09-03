@@ -85,35 +85,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="bin\Release\CI.Postbuild.ConsoleApp.exe.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bin\Debug\CI.dll" />
-    <Content Include="bin\Debug\CI.Postbuild.ConsoleApp.exe" />
-    <Content Include="bin\Release\CI.dll" />
-    <Content Include="bin\Release\CI.Postbuild.ConsoleApp.exe" />
-    <Content Include="bin\Release\CI.Postbuild.ConsoleApp.pdb" />
-    <Content Include="bin\Release\Com.Xamtastic.Patterns.CI.Dropbox.dll" />
-    <Content Include="bin\Release\Com.Xamtastic.Patterns.CI.Dropbox.pdb" />
-    <Content Include="bin\Release\Dropbox.Api.dll" />
-    <Content Include="bin\Release\Dropbox.Api.xml" />
-    <Content Include="bin\Release\Microsoft.Threading.Tasks.dll" />
-    <Content Include="bin\Release\Microsoft.Threading.Tasks.Extensions.Desktop.dll" />
-    <Content Include="bin\Release\Microsoft.Threading.Tasks.Extensions.Desktop.xml" />
-    <Content Include="bin\Release\Microsoft.Threading.Tasks.Extensions.dll" />
-    <Content Include="bin\Release\Microsoft.Threading.Tasks.Extensions.xml" />
-    <Content Include="bin\Release\Microsoft.Threading.Tasks.xml" />
-    <Content Include="bin\Release\Newtonsoft.Json.dll" />
-    <Content Include="bin\Release\Newtonsoft.Json.xml" />
-    <Content Include="bin\Release\System.Net.Http.Extensions.dll" />
-    <Content Include="bin\Release\System.Net.Http.Extensions.xml" />
-    <Content Include="bin\Release\System.Net.Http.Primitives.dll" />
-    <Content Include="bin\Release\System.Net.Http.Primitives.xml" />
     <Content Include="CI.dll" />
     <Content Include="Com.Xamtastic.Patterns.CI.Dropbox.dll" />
-    <Content Include="Newtonsoft.Json.dll" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
