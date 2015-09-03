@@ -53,7 +53,7 @@
     <IpaIncludeArtwork>False</IpaIncludeArtwork>
     <IpaPackageName>JenkinsPreBuild.ipa</IpaPackageName>
     <MtouchSdkVersion>8.4</MtouchSdkVersion>
-    <MtouchLink>SdkOnly</MtouchLink>
+    <MtouchLink>Full</MtouchLink>
     <MtouchProfiling>False</MtouchProfiling>
     <MtouchFastDev>False</MtouchFastDev>
     <MtouchUseLlvm>False</MtouchUseLlvm>

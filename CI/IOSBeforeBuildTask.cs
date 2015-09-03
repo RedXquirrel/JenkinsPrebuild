@@ -57,6 +57,10 @@ namespace CI
 
         public override bool Execute()
         {
+            if (!File.Exists(NextBuildNumberFilePath))
+            {
+                return true;
+            }
             #region Setup Post Build variables
             if (!CreatePostBuildConfigDirectory()) { LogFailedMethod("CreatePostBuildConfigDirectory()"); return false; }
             if (!CreatePostBuildJsonFile()) { LogFailedMethod("CreatePostBuildJsonFile()"); return false; }
