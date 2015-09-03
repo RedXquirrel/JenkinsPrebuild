@@ -80,6 +80,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="bin\Debug\CI.dll - Copy 1.config" />
+    <None Include="bin\Debug\CI.dll.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -89,15 +91,31 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bin\Debug\CI - Copy 1.pdb" />
     <Content Include="bin\Debug\CI.dll" />
+    <Content Include="bin\Debug\CI.pdb" />
+    <Content Include="bin\Debug\Com.Xamtastic.Patterns.CI.Dropbox - Copy 1.pdb" />
     <Content Include="bin\Debug\Com.Xamtastic.Patterns.CI.Dropbox.dll" />
+    <Content Include="bin\Debug\Com.Xamtastic.Patterns.CI.Dropbox.pdb" />
+    <Content Include="bin\Debug\Dropbox.Api - Copy 1.xml" />
     <Content Include="bin\Debug\Dropbox.Api.dll" />
+    <Content Include="bin\Debug\Dropbox.Api.xml" />
+    <Content Include="bin\Debug\Microsoft.Threading.Tasks - Copy 1.xml" />
     <Content Include="bin\Debug\Microsoft.Threading.Tasks.dll" />
+    <Content Include="bin\Debug\Microsoft.Threading.Tasks.Extensions - Copy 1.xml" />
+    <Content Include="bin\Debug\Microsoft.Threading.Tasks.Extensions.Desktop - Copy 1.xml" />
     <Content Include="bin\Debug\Microsoft.Threading.Tasks.Extensions.Desktop.dll" />
+    <Content Include="bin\Debug\Microsoft.Threading.Tasks.Extensions.Desktop.xml" />
     <Content Include="bin\Debug\Microsoft.Threading.Tasks.Extensions.dll" />
+    <Content Include="bin\Debug\Microsoft.Threading.Tasks.Extensions.xml" />
+    <Content Include="bin\Debug\Microsoft.Threading.Tasks.xml" />
+    <Content Include="bin\Debug\Newtonsoft.Json - Copy 1.xml" />
     <Content Include="bin\Debug\Newtonsoft.Json.dll" />
+    <Content Include="bin\Debug\Newtonsoft.Json.xml" />
     <Content Include="bin\Debug\System.Net.Http.Extensions.dll" />
+    <Content Include="bin\Debug\System.Net.Http.Extensions.xml" />
     <Content Include="bin\Debug\System.Net.Http.Primitives.dll" />
+    <Content Include="bin\Debug\System.Net.Http.Primitives.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
