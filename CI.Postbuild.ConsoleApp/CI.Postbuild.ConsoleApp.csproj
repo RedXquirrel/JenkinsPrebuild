@@ -110,6 +110,7 @@
     <Content Include="bin\Release\System.Net.Http.Extensions.xml" />
     <Content Include="bin\Release\System.Net.Http.Primitives.dll" />
     <Content Include="bin\Release\System.Net.Http.Primitives.xml" />
+    <Content Include="CI.dll" />
     <Content Include="Com.Xamtastic.Patterns.CI.Dropbox.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
