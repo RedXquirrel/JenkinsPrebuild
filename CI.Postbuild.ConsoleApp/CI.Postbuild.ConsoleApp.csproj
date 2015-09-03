@@ -88,6 +88,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bin\Release\CI.Postbuild.ConsoleApp.exe" />
     <Content Include="Com.Xamtastic.Patterns.CI.Dropbox.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
