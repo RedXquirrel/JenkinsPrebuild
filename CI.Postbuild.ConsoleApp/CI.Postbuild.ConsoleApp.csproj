@@ -32,14 +32,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\CI.dll</HintPath>
-    </Reference>
-    <Reference Include="Com.Xamtastic.Patterns.CI.Dropbox, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\Com.Xamtastic.Patterns.CI.Dropbox.dll</HintPath>
-    </Reference>
     <Reference Include="Dropbox.Api, Version=0.1.5694.33664, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Dropbox.Api.1.1.0-beta\lib\portable-net45+sl50+win+wpa81+wp80\Dropbox.Api.dll</HintPath>
       <Private>True</Private>
@@ -90,10 +82,15 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="CI.dll" />
-    <Content Include="Com.Xamtastic.Patterns.CI.Dropbox.dll" />
+    <ProjectReference Include="..\CI\CI.csproj">
+      <Project>{e6101995-de2f-4928-a087-709eee133400}</Project>
+      <Name>CI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Com.Xamtastic.Patterns.CI.Dropbox\Com.Xamtastic.Patterns.CI.Dropbox.csproj">
+      <Project>{6ac9b4ac-bf02-4323-a079-1ea9f4765b15}</Project>
+      <Name>Com.Xamtastic.Patterns.CI.Dropbox</Name>
+    </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
