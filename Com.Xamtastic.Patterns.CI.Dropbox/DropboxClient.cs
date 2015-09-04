@@ -96,7 +96,7 @@ namespace Com.Xamtastic.Patterns.CI.DropboxCI
                     }
                     else
                     {
-                        var cursor = new Dropbox.Api.Files.UploadSessionCursor(sessionId, (ulong)(chunkSize * idx));
+                        var cursor = new UploadSessionCursor(sessionId, (ulong)(chunkSize * idx));
                         
                         if (idx == numChunks - 1)
                         {
