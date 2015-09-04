@@ -61,9 +61,10 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
 
         public override bool Execute()
         {
-            throw new Exception("Shit!");
+
             if (!File.Exists(NextBuildNumberFilePath))
             {
+                throw new Exception("CIError: Next Build Number File does not exist");
                 return true;
             }
             #region Setup Post Build variables
@@ -130,6 +131,7 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
             }
             catch (Exception ex)
             {
+                throw new Exception("Shit!");
                 return false;
             }
 
