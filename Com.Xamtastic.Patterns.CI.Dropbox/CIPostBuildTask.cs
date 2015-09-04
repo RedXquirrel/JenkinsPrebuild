@@ -16,7 +16,10 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
         private PostBuildConfigSettingsModel _config;
 
         public string ProjectName { get; set; }
+
         public string LogPath { get; set; }
+        public string AutomationLogDirectory { get; set; }
+        public string AutomationLogFilename { get; set; }
         public string NextBuildNumber { get; set; }
         public string IPASourceFileName { get; set; }
         public string IPATargetFileName { get; set; }
@@ -29,14 +32,10 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
             string automationConfigDirectory,
             string automationConfigFilename)
         {
+            AutomationLogFilename = automationLogFilename;
+            AutomationLogDirectory = automationLogDirectory;
 
-            if (!System.IO.Directory.Exists(automationLogDirectory))
-            {
-                System.IO.Directory.CreateDirectory(automationLogDirectory);
-            }
-
-            string logPath = System.IO.Path.Combine(automationLogDirectory, automationLogFilename);
-            LogPath = logPath;
+            LogPath = System.IO.Path.Combine(AutomationLogDirectory, AutomationLogFilename);
 
             CheckLogPathExists();
             LogBeforeBuildStarted();
@@ -220,6 +219,10 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
 
         private void CheckLogPathExists()
         {
+            if (!System.IO.Directory.Exists(AutomationLogDirectory))
+            {
+                System.IO.Directory.CreateDirectory(AutomationLogDirectory);
+            }
             if (!File.Exists(LogPath))
             {
                 LogMessage(string.Format("Build Server Log File Created: {0} UTC", DateTime.UtcNow.ToString()));

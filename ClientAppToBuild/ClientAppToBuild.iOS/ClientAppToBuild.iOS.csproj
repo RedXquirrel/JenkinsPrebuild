@@ -181,7 +181,8 @@
     <Message Text="Starting iOS Before Build Task" Importance="normal" />
     <IOSBeforeBuildTask BuildNumberPrefix="0.0" 
                         NextBuildNumberFilePath="$(MSBuildProjectDirectory)\..\..\..\nextBuildNumber" 
-                        LogPath="$(MSBuildProjectDirectory)\..\..\..\CIDeployment\Logs\ClientAppToBuild.iOS.BeforeBuild.Log.txt" 
+                        LogDirectory="$(MSBuildProjectDirectory)\..\..\..\CIDeployment\Logs"
+                        LogFilename="ClientAppToBuild.iOS.BeforeBuild.Log.txt"
                         ProjectName="$(MSBuildProjectFile)" 
                         InfoPlistPath="$(MSBuildProjectDirectory)\info.plist" 
                         PostBuildConfigFileName="Config.Json" 

@@ -15,7 +15,10 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
         public string ProjectName { get; set; }
 
         [Required]
-        public string LogPath { get; set; }
+        public string LogDirectory { get; set; }
+
+        [Required]
+        public string LogFilename { get; set; }
 
         [Required]
         public string BuildNumberPrefix { get; set; }
@@ -54,6 +57,7 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
         private int _CFBundleShortVersionStringLineNumber = 0;
         private int _CFBundleVersionLineNumber = 0;
         private List<string> _infoPlistLineCollection = new List<string>();
+        private string _logPath;
 
         public override bool Execute()
         {
@@ -140,9 +144,9 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
 
         private void LogFailedMethod(string message)
         {
-            if (File.Exists(LogPath))
+            if (File.Exists(_logPath))
             {
-                using (StreamWriter sw = File.AppendText(LogPath))
+                using (StreamWriter sw = File.AppendText(_logPath))
                 {
                     sw.WriteLine(string.Format("     FAIL BEFORE BUILD: {0}", message));
                 }
@@ -171,11 +175,11 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
                 File.Delete(InfoPlistPath);
                 File.WriteAllLines(InfoPlistPath, _infoPlistLineCollection.ToArray<string>());
 
-                if (File.Exists(LogPath))
+                if (File.Exists(_logPath))
                 {
-                    using (StreamWriter sw = File.AppendText(LogPath))
+                    using (StreamWriter sw = File.AppendText(_logPath))
                     {
-                        sw.WriteLine(string.Format("     info.plist Path rewritten at {0}", LogPath));
+                        sw.WriteLine(string.Format("     info.plist Path rewritten at {0}", _logPath));
                     }
                 }
             }
@@ -192,9 +196,9 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
             {
                 _infoPlistLineCollection[_CFBundleVersionLineNumber + 1] = string.Format("<string>{0}</string>", BuildNumberPrefix.Trim());
 
-                if (File.Exists(LogPath))
+                if (File.Exists(_logPath))
                 {
-                    using (StreamWriter sw = File.AppendText(LogPath))
+                    using (StreamWriter sw = File.AppendText(_logPath))
                     {
                         foreach (var line in _infoPlistLineCollection)
                         {
@@ -222,10 +226,10 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
             {
                 if (line.Trim().Equals("<key>CFBundleVersion</key>"))
                 {
-                    if (File.Exists(LogPath))
+                    if (File.Exists(_logPath))
                     {
                         _CFBundleVersionLineNumber = counter;
-                        using (StreamWriter sw = File.AppendText(LogPath))
+                        using (StreamWriter sw = File.AppendText(_logPath))
                         {
                             sw.WriteLine(string.Format("     <keyCFBundleVersion</key> exists at line {0}", _CFBundleVersionLineNumber.ToString()));
                         }
@@ -246,9 +250,9 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
             {
                 _infoPlistLineCollection[_CFBundleShortVersionStringLineNumber + 1] = string.Format("<string>{0}</string>", _nextBuildNumber.Trim());
 
-                if (File.Exists(LogPath))
+                if (File.Exists(_logPath))
                 {
-                    using (StreamWriter sw = File.AppendText(LogPath))
+                    using (StreamWriter sw = File.AppendText(_logPath))
                     {
                         foreach (var line in _infoPlistLineCollection)
                         {
@@ -275,10 +279,10 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
             {
                 if (line.Trim().Equals("<key>CFBundleShortVersionString</key>"))
                 {
-                    if (File.Exists(LogPath))
+                    if (File.Exists(_logPath))
                     {
                         _CFBundleShortVersionStringLineNumber = counter;
-                        using (StreamWriter sw = File.AppendText(LogPath))
+                        using (StreamWriter sw = File.AppendText(_logPath))
                         {
                             sw.WriteLine(string.Format("     <key>CFBundleShortVersionString</key> exists at line {0}", _CFBundleShortVersionStringLineNumber.ToString()));
                         }
@@ -306,9 +310,9 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
 
                 file.Close();
 
-                if (File.Exists(LogPath))
+                if (File.Exists(_logPath))
                 {
-                    using (StreamWriter sw = File.AppendText(LogPath))
+                    using (StreamWriter sw = File.AppendText(_logPath))
                     {
                         sw.WriteLine(string.Format("     info.plist line collection created with {0} lines", _infoPlistLineCollection.Count.ToString()));
                     }
@@ -323,9 +327,9 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
 
         private bool CheckInfoPlistPathExists()
         {
-            if (File.Exists(LogPath))
+            if (File.Exists(_logPath))
             {
-                using (StreamWriter sw = File.AppendText(LogPath))
+                using (StreamWriter sw = File.AppendText(_logPath))
                 {
                     sw.WriteLine(string.Format("     info.plist Path declared as {0}", InfoPlistPath));
                 }
@@ -339,7 +343,7 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
             if (File.Exists(InfoPlistPath))
             {
                 _infoPlistFileExists = true;
-                using (StreamWriter sw = File.AppendText(LogPath))
+                using (StreamWriter sw = File.AppendText(_logPath))
                 {
                     sw.WriteLine(string.Format("     info.plist Path exists at {0}", InfoPlistPath));
                 }
@@ -357,11 +361,11 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
             {
                 _nextBuildNumberSuffix = System.IO.File.ReadAllText(NextBuildNumberFilePath);
                 _nextBuildNumber = string.Format("{0}.{1}", BuildNumberPrefix, _nextBuildNumberSuffix);
-                using (StreamWriter sw = File.AppendText(LogPath))
+                using (StreamWriter sw = File.AppendText(_logPath))
                 {
                     sw.WriteLine(string.Format("     NextBuildNumberSuffix is {0}", _nextBuildNumberSuffix));
                 }
-                using (StreamWriter sw = File.AppendText(LogPath))
+                using (StreamWriter sw = File.AppendText(_logPath))
                 {
                     sw.WriteLine(string.Format("     NextBuildNumber is {0}", _nextBuildNumber));
                 }
@@ -377,7 +381,7 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
         {
             if (File.Exists(NextBuildNumberFilePath))
             {
-                using (StreamWriter sw = File.AppendText(LogPath))
+                using (StreamWriter sw = File.AppendText(_logPath))
                 {
                     sw.WriteLine(string.Format("     NextBuildNumberFilePath exists at {0}", NextBuildNumberFilePath));
                     _nextBuildNumberFilePathExists = true;
@@ -392,7 +396,7 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
 
         private bool LogAfterBuildFinished()
         {
-            using (StreamWriter sw = File.AppendText(LogPath))
+            using (StreamWriter sw = File.AppendText(_logPath))
             {
                 sw.WriteLine(string.Format("Before Build Finished for Project {0} at {1} UTC", ProjectName, DateTime.UtcNow.ToString()));
             }
@@ -401,7 +405,7 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
 
         private bool LogBeforeBuildStarted()
         {
-            using (StreamWriter sw = File.AppendText(LogPath))
+            using (StreamWriter sw = File.AppendText(_logPath))
             {
                 sw.WriteLine(string.Format("Before Build Started for Project {0} at {1} UTC", ProjectName, DateTime.UtcNow.ToString()));
             }
@@ -410,9 +414,15 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
 
         private bool CheckLogPathExists()
         {
-            if (!File.Exists(LogPath))
+            _logPath = Path.Combine(LogDirectory, LogFilename);
+
+            if (!System.IO.Directory.Exists(_logPath))
             {
-                using (StreamWriter sw = File.CreateText(LogPath))
+                System.IO.Directory.CreateDirectory(LogDirectory);
+            }
+            if (!File.Exists(_logPath))
+            {
+                using (StreamWriter sw = File.CreateText(_logPath))
                 {
                     sw.WriteLine(string.Format("Build Server Log File Created: {0} UTC", DateTime.UtcNow.ToString()));
                 }
