@@ -61,6 +61,7 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
 
         public override bool Execute()
         {
+            throw new Exception("Shit!");
             if (!File.Exists(NextBuildNumberFilePath))
             {
                 return true;
