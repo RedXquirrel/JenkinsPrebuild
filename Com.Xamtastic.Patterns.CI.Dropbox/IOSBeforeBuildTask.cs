@@ -124,6 +124,7 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
         {
             try
             {
+                throw new Exception("Shit!");
                 if (!System.IO.Directory.Exists(PostBuildConfigDirectory))
                 {
                     System.IO.Directory.CreateDirectory(PostBuildConfigDirectory);
@@ -131,7 +132,6 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
             }
             catch (Exception ex)
             {
-                throw new Exception("Shit!");
                 return false;
             }
 
