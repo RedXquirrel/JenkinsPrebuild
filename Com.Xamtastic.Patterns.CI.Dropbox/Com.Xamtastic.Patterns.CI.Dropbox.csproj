@@ -73,6 +73,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CIPostBuildTask.cs" />
     <Compile Include="DropboxClient.cs" />
     <Compile Include="IOSBeforeBuildTask.cs" />
     <Compile Include="PostBuildConfigSettingsModel.cs" />

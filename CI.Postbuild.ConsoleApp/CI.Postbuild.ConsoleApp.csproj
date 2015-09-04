@@ -82,10 +82,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CI\CI.csproj">
-      <Project>{e6101995-de2f-4928-a087-709eee133400}</Project>
-      <Name>CI</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Com.Xamtastic.Patterns.CI.Dropbox\Com.Xamtastic.Patterns.CI.Dropbox.csproj">
       <Project>{6ac9b4ac-bf02-4323-a079-1ea9f4765b15}</Project>
       <Name>Com.Xamtastic.Patterns.CI.Dropbox</Name>
