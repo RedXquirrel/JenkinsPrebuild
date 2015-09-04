@@ -1,4 +1,7 @@
-﻿using Com.Xamtastic.Patterns.CI.Dropbox;
+﻿
+using System.Configuration;
+using System.Collections.Specialized;
+using Com.Xamtastic.Patterns.CI.Dropbox;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +21,12 @@ namespace Xamtastic.Automation
         static async Task Run()
         {
             CIPostBuildTask postBuild = new CIPostBuildTask();
-            await postBuild.Run();
+            await postBuild.Run(
+                ConfigurationManager.AppSettings.Get("AutomationLogDirectory"),
+                ConfigurationManager.AppSettings.Get("AutomationLogFilename"),
+                ConfigurationManager.AppSettings.Get("AutomationConfigDirectory"),
+                ConfigurationManager.AppSettings.Get("AutomationConfigFilename")
+                );
         }
     }
 }

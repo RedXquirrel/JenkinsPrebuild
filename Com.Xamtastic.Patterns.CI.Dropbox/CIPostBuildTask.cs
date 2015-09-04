@@ -23,25 +23,24 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
         public string IPASourceDirectory { get; set; }
         public string IPATargetDirectory { get; set; }
 
-        public async Task<bool> Run()
+        public async Task<bool> Run(
+            string automationLogDirectory,
+            string automationLogFilename,
+            string automationConfigDirectory,
+            string automationConfigFilename)
         {
-            string logDirectory = @"/Users/CI/.jenkins/jobs/Jenkins Automatic Deployment Template/";
-            string logPath = System.IO.Path.Combine(logDirectory, "MyExeLogFile.txt");
+            
+            string logPath = System.IO.Path.Combine(automationLogDirectory, automationLogFilename);
             LogPath = logPath;
 
             CheckLogPathExists();
             LogBeforeBuildStarted();
 
-            string CIConfigDirectory = @"/Users/CI/.jenkins/jobs/Jenkins Automatic Deployment Template/CIConfig";
-
-            LogMessage(string.Format("     Configuration Directory: {0}", CIConfigDirectory));
-
-            string CIConfigJsonFileName = @"CIPostBuildConfig.json";
-
-            LogMessage(string.Format("     Configuration File Name: {0}", CIConfigJsonFileName));
+            LogMessage(string.Format("     Configuration Directory: {0}", automationConfigDirectory));
+            LogMessage(string.Format("     Configuration File Name: {0}", automationConfigFilename));
 
 
-            string CIConfigJsonFilePath = Path.Combine(CIConfigDirectory, CIConfigJsonFileName);
+            string CIConfigJsonFilePath = Path.Combine(automationConfigDirectory, automationConfigFilename);
 
             LogMessage(string.Format("     Configuration File Path: {0}", CIConfigJsonFilePath));
 
