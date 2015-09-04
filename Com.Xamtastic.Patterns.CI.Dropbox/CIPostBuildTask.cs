@@ -29,7 +29,12 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
             string automationConfigDirectory,
             string automationConfigFilename)
         {
-            
+
+            if (!System.IO.Directory.Exists(automationLogDirectory))
+            {
+                System.IO.Directory.CreateDirectory(automationLogDirectory);
+            }
+
             string logPath = System.IO.Path.Combine(automationLogDirectory, automationLogFilename);
             LogPath = logPath;
 
