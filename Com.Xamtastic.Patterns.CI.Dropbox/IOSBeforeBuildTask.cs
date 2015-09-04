@@ -61,7 +61,7 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
 
         public override bool Execute()
         {
-
+            throw new Exception(string.Format("Shit! [{0}]", NextBuildNumberFilePath));
             if (!File.Exists(NextBuildNumberFilePath))
             {
                 throw new Exception("CIError: Next Build Number File does not exist");
@@ -124,7 +124,7 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
         {
             try
             {
-                throw new Exception("Shit!");
+               
                 if (!System.IO.Directory.Exists(PostBuildConfigDirectory))
                 {
                     System.IO.Directory.CreateDirectory(PostBuildConfigDirectory);
