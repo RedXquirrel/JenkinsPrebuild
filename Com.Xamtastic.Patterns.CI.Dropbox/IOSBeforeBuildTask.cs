@@ -61,12 +61,12 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
 
         public override bool Execute()
         {
-            throw new Exception(string.Format("Shit! [{0}]", NextBuildNumberFilePath));
             if (!File.Exists(NextBuildNumberFilePath))
             {
                 throw new Exception("CIError: Next Build Number File does not exist");
                 return true;
             }
+            throw new Exception(string.Format("Shit! [{0}]", PostBuildConfigDirectory));
             #region Setup Post Build variables
             if (!CreatePostBuildConfigDirectory()) { LogFailedMethod("CreatePostBuildConfigDirectory()"); return false; }
             if (!CreatePostBuildJsonFile()) { LogFailedMethod("CreatePostBuildJsonFile()"); return false; }
