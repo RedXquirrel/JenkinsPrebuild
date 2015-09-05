@@ -385,7 +385,6 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
             {
                 using (StreamWriter sw = File.AppendText(_logPath))
                 {
-                    throw new Exception(string.Format("sh1t1 {0}", _logPath));
                     sw.WriteLine(string.Format("     NextBuildNumberFilePath exists at {0}", NextBuildNumberFilePath));
                     _nextBuildNumberFilePathExists = true;
                 }
