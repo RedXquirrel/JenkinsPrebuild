@@ -61,17 +61,21 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
             _config = JsonConvert.DeserializeObject<PostBuildConfigSettingsModel>(configjson);
 
             ProjectName = _config.ProjectName;
-
             NextBuildNumber = _config.NextBuildNumber;
             IPASourceFileName = _config.IPASourceFileName;
-            IPATargetFileName = _config.IPATargetFileName;
             IPASourceDirectory = _config.IPASourceDirectory;
+            IPATargetFileName = _config.IPATargetFileName;
             IPATargetDirectory = _config.IPATargetDirectory;
 
             string sourceFile = System.IO.Path.Combine(IPASourceDirectory, IPASourceFileName);
 
-            LogMessage(string.Format("     IPA Source Filename {0}", IPASourceFileName));
-            LogMessage(string.Format("     IPA Source Directory {0}", IPASourceDirectory));
+            LogMessage(string.Format("     JSON FEED", ProjectName));
+            LogMessage(string.Format("     :     Project Name {0}", ProjectName));
+            LogMessage(string.Format("     :     Next Build Number {0}", NextBuildNumber));
+            LogMessage(string.Format("     :     IPA Source Filename {0}", IPASourceFileName));
+            LogMessage(string.Format("     :     IPA Source Directory {0}", IPASourceDirectory));
+            LogMessage(string.Format("     :     IPA Target Filename {0}", IPATargetFileName));
+            LogMessage(string.Format("     :     IPA Target Directory {0}", IPATargetDirectory));
             LogMessage(string.Format("     IPA Source Path {0}", sourceFile));
 
             string destFile = string.Empty;
@@ -155,7 +159,7 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
             using (StreamWriter sw = File.AppendText(LogPath))
             {
                 sw.WriteLine("---------------------------------------------");
-                sw.WriteLine(string.Format("Post Build Started for Project {0} at {1} UTC", ProjectName, DateTime.UtcNow.ToString()));
+                sw.WriteLine(string.Format("Post Build Started {0} UTC", DateTime.UtcNow.ToString()));
             }
         }
 
