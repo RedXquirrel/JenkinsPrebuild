@@ -12,9 +12,6 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
     public class IOSBeforeBuildTask : Microsoft.Build.Utilities.Task
     {
         [Required]
-        public string JenkinsProjectJobRoot { get; set; }
-
-        [Required]
         public string ProjectName { get; set; }
 
         [Required]
