@@ -384,7 +384,7 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
         {
             if (File.Exists(NextBuildNumberFilePath))
             {
-                throw new Exception(string.Format("sh1t {0}", _logPath));
+                throw new Exception(string.Format("sh1t [{0}]", _logPath));
                 using (StreamWriter sw = File.AppendText(_logPath))
                 {
                     throw new Exception(string.Format("sh1t1 {0}", _logPath));
