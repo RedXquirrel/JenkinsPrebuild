@@ -61,6 +61,7 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
 
         public override bool Execute()
         {
+            // test
             if (!File.Exists(NextBuildNumberFilePath))
             {
                 throw new Exception("CIError: Next Build Number File does not exist");
