@@ -64,7 +64,7 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
 
         public override bool Execute()
         {
-            throw new Exception(string.Format("*** JenkinsProjectJobRoot: [{0}]", JenkinsProjectJobRoot));
+            //throw new Exception(string.Format("*** JenkinsProjectJobRoot: [{0}]", JenkinsProjectJobRoot));
             _logPath = Path.Combine(LogDirectory, LogFilename);
 
             if (!File.Exists(NextBuildNumberFilePath))
