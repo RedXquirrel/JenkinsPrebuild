@@ -179,8 +179,8 @@
   <UsingTask AssemblyFile="$(MSBuildProjectDirectory)\..\..\Xamtastic\Automation\Com.Xamtastic.Patterns.CI.Dropbox.dll" TaskName="Com.Xamtastic.Patterns.CI.Dropbox.IOSBeforeBuildTask" />
   <Target Name="BeforeBuild">
     <Message Text="Starting iOS Before Build Task" Importance="normal" />
-    <IOSBeforeBuildTask 
-                        JenkinsProjectJobRoot="$(MSBuildProjectDirectory)\..\..\..\..\"
+    <IOSBeforeBuildTask
+                        JenkinsProjectJobRoot="test"
                         BuildNumberPrefix="0.0"
                         NextBuildNumberFilePath="$(MSBuildProjectDirectory)\..\..\..\nextBuildNumber" 
                         LogDirectory="$(MSBuildProjectDirectory)\..\..\..\CIDeployment\Logs"
