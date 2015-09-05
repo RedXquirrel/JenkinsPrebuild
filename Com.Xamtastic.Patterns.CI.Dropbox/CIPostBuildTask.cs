@@ -69,7 +69,7 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
 
             string sourceFile = System.IO.Path.Combine(IPASourceDirectory, IPASourceFileName);
 
-            LogMessage(string.Format("     JSON FEED", ProjectName));
+            LogMessage(string.Format("     CONFIG FILE JSON RESULTS", ProjectName));
             LogMessage(string.Format("     :     Project Name {0}", ProjectName));
             LogMessage(string.Format("     :     Next Build Number {0}", NextBuildNumber));
             LogMessage(string.Format("     :     IPA Source Filename {0}", IPASourceFileName));
