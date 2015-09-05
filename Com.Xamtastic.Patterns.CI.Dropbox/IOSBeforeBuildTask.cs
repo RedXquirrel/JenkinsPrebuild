@@ -84,8 +84,9 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
 
         private bool CreatePostBuildJsonFile()
         {
-            if (!CheckNextBuildNumberFilePathExists()) { LogFailedMethod("CheckNextBuildNumberFilePathExists()"); return false; }
             throw new Exception("sh1t");
+            if (!CheckNextBuildNumberFilePathExists()) { LogFailedMethod("CheckNextBuildNumberFilePathExists()"); return false; }
+
             try
             {
                 string nextBuildNumber = "x.x.x";
