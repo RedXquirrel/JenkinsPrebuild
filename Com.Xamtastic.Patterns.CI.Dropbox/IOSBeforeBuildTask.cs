@@ -12,7 +12,7 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
     public class IOSBeforeBuildTask : Microsoft.Build.Utilities.Task
     {
         [Required]
-        public string JenkinsWorkspaceRoot { get; set; }
+        public string JenkinsProjectJobRoot { get; set; }
 
         [Required]
         public string ProjectName { get; set; }
@@ -64,7 +64,7 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
 
         public override bool Execute()
         {
-            throw new Exception(string.Format("Workspace Root:", JenkinsWorkspaceRoot));
+            throw new Exception(string.Format("JenkinsProjectJobRoot: [{0}]", JenkinsProjectJobRoot));
             _logPath = Path.Combine(LogDirectory, LogFilename);
 
             if (!File.Exists(NextBuildNumberFilePath))
