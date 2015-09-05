@@ -180,6 +180,7 @@
   <Target Name="BeforeBuild">
     <Message Text="Starting iOS Before Build Task" Importance="normal" />
     <IOSBeforeBuildTask BuildNumberPrefix="0.0" 
+                        JenkinsWorkspaceRoot="$(MSBuildProjectDirectory)\..\..\..\"
                         NextBuildNumberFilePath="$(MSBuildProjectDirectory)\..\..\..\nextBuildNumber" 
                         LogDirectory="$(MSBuildProjectDirectory)\..\..\..\CIDeployment\Logs"
                         LogFilename="ClientAppToBuild.iOS.BeforeBuild.Log.txt"

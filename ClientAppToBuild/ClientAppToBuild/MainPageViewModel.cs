@@ -9,6 +9,9 @@ namespace ClientAppToBuild
 {
     public class MainPageViewModel : ViewModelBase
     {
+
+        public MainPageViewModel() {  }
+
         private string _message = "Hello SmallestMvvm!";
         public string Message
         {

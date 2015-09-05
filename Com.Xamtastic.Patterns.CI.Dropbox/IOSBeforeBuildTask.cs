@@ -12,6 +12,9 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
     public class IOSBeforeBuildTask : Microsoft.Build.Utilities.Task
     {
         [Required]
+        public string JenkinsWorkspaceRoot { get; set; }
+
+        [Required]
         public string ProjectName { get; set; }
 
         [Required]
@@ -61,11 +64,12 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
 
         public override bool Execute()
         {
+            throw new Exception(string.Format("Workspace Root:", JenkinsWorkspaceRoot));
             _logPath = Path.Combine(LogDirectory, LogFilename);
 
             if (!File.Exists(NextBuildNumberFilePath))
             {
-                throw new Exception("CIError: Next Build Number File does not exist");
+                //throw new Exception("CIError: Next Build Number File does not exist");
                 return true;
             }
             #region Setup Post Build variables
