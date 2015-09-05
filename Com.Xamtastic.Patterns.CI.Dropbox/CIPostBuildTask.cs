@@ -106,29 +106,7 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
 
             LogMessage(string.Format("     Copied {0} to IPAArchives Directory", IPATargetFileName));
 
-            LogMessage("     COMMENCING DROPBOX UPLOAD SEQUENCE");
-
-            using (var dbx = new DropboxClient(dropboxGeneratedAccessToken))
-            {
-                LogMessage("     :     Entered using new DropbBoxClient() phase");
-                try
-                {
-                    var full = await dbx.Users.GetCurrentAccountAsync();
-                    LogMessage("     :     Awaited dbx.Users.GetCurrentAccountAsync()");
-                    LogMessage(string.Format("     :     DropBox User DropBox Client Created for {0} - {1}", full.Name.DisplayName, full.Email));
-                }
-                catch (Exception ex)
-                {
-                    LogMessage(string.Format("     :     ERROR: {0}", ex.Message));
-                }
-
-                await UploadToDropBox(dbx, "/test", IPATargetFileName, destFile);
-                //await UploadToDropBox(dbx, "/test", IPATargetFileName, CIConfigDirectory + "/test.zip");
-
-                LogMessage("     :     Exiting using new DropbBoxClient() phase");
-            }
-
-            LogMessage("     :     Exited using new DropbBoxClient() phase");
+            await UploadToDropBox("/test", IPATargetFileName, destFile);
 
             LogAfterBuildFinished();
 
@@ -143,30 +121,7 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
             }
         }
 
-        async Task UploadTextToDropBox(DropboxClient dbx, string folder, string filename, string content)
-        {
-            LogMessage("     :     In UploadToDropBox(...)");
-            using (var mem = new MemoryStream(Encoding.UTF8.GetBytes(content)))
-            {
-                LogMessage("     :     In using (var mem = new MemoryStream(Encoding.UTF8.GetBytes(content)))");
-                try
-                {
-                    var updated = await dbx.Files.UploadAsync(
-                        folder + "/" + filename,
-                        WriteMode.Overwrite.Instance,
-                        body: mem);
-                }
-                catch (Exception ex)
-                {
-                    LogMessage(string.Format("     :     ERROR: {0}", ex.Message));
-                }
-                LogMessage("     :     Processed var updated = await dbx.Files.UploadAsync(...)");
-                LogMessage("     :     Exiting  using (var mem = new MemoryStream(Encoding.UTF8.GetBytes(content)))");
-            }
-            LogMessage("     :     Exiting UploadToDropBox(...)");
-        }
-
-        async Task UploadToDropBox(DropboxClient dbxbak, string dropboxfolder, string dropboxfilename, string filepathtoUpload)
+        async Task UploadToDropBox(string dropboxfolder, string dropboxfilename, string filepathtoUpload)
         {
             LogMessage("     :     In UploadToDropBox(...)");
             LogMessage(string.Format("     :          DropBox folder {0}", dropboxfolder));
