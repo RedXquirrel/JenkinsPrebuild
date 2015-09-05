@@ -15,6 +15,8 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
     {
         private PostBuildConfigSettingsModel _config;
 
+        public string DropboxClientKey { get; set; }
+
         public string ProjectName { get; set; }
 
         public string LogPath { get; set; }
@@ -27,11 +29,15 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
         public string IPATargetDirectory { get; set; }
 
         public async Task<bool> Run(
+            string dropboxGeneratedAccessToken,
             string automationLogDirectory,
             string automationLogFilename,
             string automationConfigDirectory,
             string automationConfigFilename)
         {
+
+            DropboxClientKey = dropboxGeneratedAccessToken;
+
             AutomationLogFilename = automationLogFilename;
             AutomationLogDirectory = automationLogDirectory;
 
@@ -102,7 +108,7 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
 
             LogMessage("     COMMENCING DROPBOX UPLOAD SEQUENCE");
 
-            using (var dbx = new DropboxClient("NYDBfyWzefAAAAAAAAAABqwodGdUMmmYVDuixOQaIOOXj3KejN36z1EOtgC5iy8O"))
+            using (var dbx = new DropboxClient(dropboxGeneratedAccessToken))
             {
                 LogMessage("     :     Entered using new DropbBoxClient() phase");
                 try
@@ -167,7 +173,7 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
             LogMessage(string.Format("     :          DropBox filename {0}", dropboxfolder));
             LogMessage(string.Format("     :          File to Upload {0}", filepathtoUpload));
 
-            var dc = new DropboxCIClient("NYDBfyWzefAAAAAAAAAABqwodGdUMmmYVDuixOQaIOOXj3KejN36z1EOtgC5iy8O");
+            var dc = new DropboxCIClient(DropboxClientKey);
             dc.LogMessageAction = (message) =>
             {
                 LogMessage(string.Format("     :          {0}", message));
@@ -177,26 +183,6 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
                 throw new Exception(message);
             };
             await dc.Upload(filepathtoUpload, dropboxfolder + "/" + dropboxfilename);
-
-            //using (var dbx = new DropboxClient("NYDBfyWzefAAAAAAAAAABqwodGdUMmmYVDuixOQaIOOXj3KejN36z1EOtgC5iy8O"))
-            //{
-            //    using (FileStream fsSource = new FileStream(filepathtoUpload,
-            //    FileMode.Open, FileAccess.Read))
-            //    {
-            //        try
-            //        {
-            //            var updated = await dbx.Files.UploadAsync(
-            //                dropboxfolder + "/" + dropboxfilename,
-            //                WriteMode.Overwrite.Instance,
-            //                body: fsSource);
-            //        }
-            //        catch (Exception ex)
-            //        {
-            //            LogMessage(string.Format("     :     ERROR: {0}", ex.Message));
-            //            throw;
-            //        }
-            //    }
-            //}
 
             LogMessage("     :     Exiting UploadToDropBox(...)");
         }

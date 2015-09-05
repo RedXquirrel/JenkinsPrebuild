@@ -22,6 +22,7 @@ namespace Xamtastic.Automation
         {
             CIPostBuildTask postBuild = new CIPostBuildTask();
             await postBuild.Run(
+                ConfigurationManager.AppSettings.Get("DropboxGeneratedAccessToken"),
                 ConfigurationManager.AppSettings.Get("AutomationLogDirectory"),
                 ConfigurationManager.AppSettings.Get("AutomationLogFilename"),
                 ConfigurationManager.AppSettings.Get("AutomationConfigDirectory"),
