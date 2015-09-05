@@ -68,7 +68,6 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
                 throw new Exception("CIError: Next Build Number File does not exist");
                 return true;
             }
-            // throw new Exception(string.Format("Shit!1 [{0}]", PostBuildConfigDirectory));
             #region Setup Post Build variables
             if (!CreatePostBuildConfigDirectory()) { LogFailedMethod("CreatePostBuildConfigDirectory()"); return false; }
             if (!CreatePostBuildJsonFile()) { LogFailedMethod("CreatePostBuildJsonFile()"); return false; }
@@ -86,7 +85,6 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
         private bool CreatePostBuildJsonFile()
         {
             if (!CheckNextBuildNumberFilePathExists()) { LogFailedMethod("CheckNextBuildNumberFilePathExists()"); return false; }
-            throw new Exception("sh1t stop");
             try
             {
                 string nextBuildNumber = "x.x.x";
@@ -385,7 +383,6 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
         {
             if (File.Exists(NextBuildNumberFilePath))
             {
-                throw new Exception(string.Format("sh1t [{0}]", _logPath));
                 using (StreamWriter sw = File.AppendText(_logPath))
                 {
                     throw new Exception(string.Format("sh1t1 {0}", _logPath));
