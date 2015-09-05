@@ -85,7 +85,7 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
         private bool CreatePostBuildJsonFile()
         {
             if (!CheckNextBuildNumberFilePathExists()) { LogFailedMethod("CheckNextBuildNumberFilePathExists()"); return false; }
-
+            throw new Exception("sh1t");
             try
             {
                 string nextBuildNumber = "x.x.x";
@@ -107,7 +107,7 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
                 });
 
                 string configFilePath = System.IO.Path.Combine(PostBuildConfigDirectory, PostBuildConfigFileName);
-                throw new Exception("sh1t");
+
                 using (StreamWriter sw = File.CreateText(configFilePath))
                 {
                     sw.WriteLine(json);
