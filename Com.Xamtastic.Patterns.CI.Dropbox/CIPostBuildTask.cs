@@ -154,6 +154,7 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
         {
             using (StreamWriter sw = File.AppendText(LogPath))
             {
+                sw.WriteLine("---------------------------------------------");
                 sw.WriteLine(string.Format("Post Build Started for Project {0} at {1} UTC", ProjectName, DateTime.UtcNow.ToString()));
             }
         }
