@@ -107,7 +107,7 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
                 });
 
                 string configFilePath = System.IO.Path.Combine(PostBuildConfigDirectory, PostBuildConfigFileName);
-
+                throw new Exception("sh1t");
                 using (StreamWriter sw = File.CreateText(configFilePath))
                 {
                     sw.WriteLine(json);
@@ -125,12 +125,9 @@ namespace Com.Xamtastic.Patterns.CI.Dropbox
         {
             try
             {
-                throw new Exception(string.Format("Shit!2 [{0}]", PostBuildConfigDirectory));
                 if (!System.IO.Directory.Exists(PostBuildConfigDirectory))
                 {
-                    throw new Exception(string.Format("Shit!3 [{0}]", PostBuildConfigDirectory));
                     System.IO.Directory.CreateDirectory(PostBuildConfigDirectory);
-                    throw new Exception(string.Format("Shit!4 [{0}]", PostBuildConfigDirectory));
                 }
             }
             catch (Exception ex)
