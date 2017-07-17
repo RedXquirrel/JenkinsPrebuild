@@ -58,8 +58,6 @@
     <MtouchFastDev>False</MtouchFastDev>
     <MtouchUseLlvm>False</MtouchUseLlvm>
     <MtouchUseThumb>False</MtouchUseThumb>
-    <MtouchUseSGen>False</MtouchUseSGen>
-    <MtouchUseRefCounting>False</MtouchUseRefCounting>
     <MtouchOptimizePNGs>True</MtouchOptimizePNGs>
     <MtouchI18n />
   </PropertyGroup>
@@ -80,8 +78,6 @@
     <MtouchFastDev>False</MtouchFastDev>
     <MtouchUseLlvm>False</MtouchUseLlvm>
     <MtouchUseThumb>False</MtouchUseThumb>
-    <MtouchUseSGen>False</MtouchUseSGen>
-    <MtouchUseRefCounting>False</MtouchUseRefCounting>
     <MtouchOptimizePNGs>True</MtouchOptimizePNGs>
     <MtouchI18n />
     <BuildIpa>True</BuildIpa>
@@ -126,6 +122,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ClientAppToBuild\ClientAppToBuild.csproj">
       <Name>ClientAppToBuild</Name>
+      <Project>{DD206F2C-8F2B-46B6-A61B-6E6145A9A1CC}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -179,19 +176,7 @@
   <UsingTask AssemblyFile="$(MSBuildProjectDirectory)\..\..\Xamtastic\Automation\Com.Xamtastic.Patterns.CI.Dropbox.dll" TaskName="Com.Xamtastic.Patterns.CI.Dropbox.IOSBeforeBuildTask" />
   <Target Name="BeforeBuild">
     <Message Text="Starting iOS Before Build Task" Importance="normal" />
-    <IOSBeforeBuildTask
-                        BuildNumberPrefix="0.0"
-                        NextBuildNumberFilePath="$(MSBuildProjectDirectory)\..\..\..\nextBuildNumber" 
-                        LogDirectory="$(MSBuildProjectDirectory)\..\..\..\CIDeployment\Logs"
-                        LogFilename="ClientAppToBuild.iOS.BeforeBuild.Log.txt"
-                        ProjectName="$(MSBuildProjectFile)" 
-                        InfoPlistPath="$(MSBuildProjectDirectory)\info.plist" 
-                        PostBuildConfigFileName="Config.Json" 
-                        PostBuildConfigDirectory="$(MSBuildProjectDirectory)\..\..\..\CIDeployment\Config" 
-                        IPASourceFileName="JenkinsPreBuild.ipa" 
-                        IPASourceDirectory="$(MSBuildProjectDirectory)\bin\iPhone\Release\" 
-                        IPATargetFileName="JenkinsPreBuild.{0}.ipa" 
-                        IPATargetDirectory="$(MSBuildProjectDirectory)\..\..\..\CIDeployment\Archives\IPA" />
+    <IOSBeforeBuildTask BuildNumberPrefix="0.0" NextBuildNumberFilePath="$(MSBuildProjectDirectory)\..\..\..\nextBuildNumber" LogDirectory="$(MSBuildProjectDirectory)\..\..\..\CIDeployment\Logs" LogFilename="ClientAppToBuild.iOS.BeforeBuild.Log.txt" ProjectName="$(MSBuildProjectFile)" InfoPlistPath="$(MSBuildProjectDirectory)\info.plist" PostBuildConfigFileName="Config.Json" PostBuildConfigDirectory="$(MSBuildProjectDirectory)\..\..\..\CIDeployment\Config" IPASourceFileName="JenkinsPreBuild.ipa" IPASourceDirectory="$(MSBuildProjectDirectory)\bin\iPhone\Release\" IPATargetFileName="JenkinsPreBuild.{0}.ipa" IPATargetDirectory="$(MSBuildProjectDirectory)\..\..\..\CIDeployment\Archives\IPA" />
 		
     <Message Text="Finishing iOS Before Build Task" Importance="normal" />
   </Target>
