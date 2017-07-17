@@ -46,5 +46,7 @@
 	<string>LaunchScreen</string>
 	<key>CFBundleShortVersionString</key>
 	<string>0.0.0</string>
+	<key>CFBundleName</key>
+	<string>ClientAppToBuild</string>
 </dict>
 </plist>

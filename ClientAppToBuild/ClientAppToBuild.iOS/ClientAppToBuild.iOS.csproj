@@ -192,6 +192,7 @@
                         IPASourceDirectory="$(MSBuildProjectDirectory)\bin\iPhone\Release\" 
                         IPATargetFileName="JenkinsPreBuild.{0}.ipa" 
                         IPATargetDirectory="$(MSBuildProjectDirectory)\..\..\..\CIDeployment\Archives\IPA" />
+		
     <Message Text="Finishing iOS Before Build Task" Importance="normal" />
   </Target>
   <Target Name="AfterCompile">

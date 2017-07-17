@@ -67,6 +67,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Com.Xamtastic.Patterns.CI.Dropbox">
+      <HintPath>..\Com.Xamtastic.Patterns.CI.Dropbox\bin\Debug\Com.Xamtastic.Patterns.CI.Dropbox.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
@@ -78,7 +81,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Com.Xamtastic.Patterns.CI.Dropbox\Com.Xamtastic.Patterns.CI.Dropbox.csproj">
-      <Project>{6ac9b4ac-bf02-4323-a079-1ea9f4765b15}</Project>
+      <Project>{6AC9B4AC-BF02-4323-A079-1EA9F4765B15}</Project>
       <Name>Com.Xamtastic.Patterns.CI.Dropbox</Name>
     </ProjectReference>
   </ItemGroup>
